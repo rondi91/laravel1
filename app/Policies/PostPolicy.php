@@ -61,6 +61,7 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post): bool
     {
-        //
+        // Add your authorization logic here
+        return $user->id === $post->user_id;
     }
 }
