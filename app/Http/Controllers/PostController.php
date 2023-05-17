@@ -24,7 +24,8 @@ class PostController extends Controller
         }
         
         // dd(__FILE__,__LINE__,$posts->get());
-        return view('posts.index',['posts'=> $posts->get()]);
+        return view('posts.index',['posts'=> $posts->paginate(10)->withQueryString()
+    ]);
 
         
     }

@@ -26,9 +26,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($posts as $post)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        @php
+                        $number = ($posts->currentPage() - 1) * $posts->perPage() + 1;
+                    @endphp
+                    @foreach ($posts as $post)
+                <tr>
+                        <td>{{ $number++ }}</td>
+                        {{-- <td>{{ $loop->iteration }}</td> --}}
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->author }}</td>
                         <td>{{ $post->created_at }}</td>
@@ -45,5 +49,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+        {{ $posts->links() }}
+    </div>
     </div>
 @endsection
