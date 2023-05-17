@@ -50,9 +50,9 @@
 
 
         <!-- partial:partials/_footer.html -->
-        @include('layouts.partials._footer')
         <!-- partial -->
       </div>
+      @include('layouts.partials._footer')
       <!-- main-panel ends -->
     </div>   
     <!-- page-body-wrapper ends -->

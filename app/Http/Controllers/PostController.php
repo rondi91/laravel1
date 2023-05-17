@@ -8,14 +8,23 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    /**
+    /**dffsdf
      * Display a listing of the resource.
      */
     public function index()
     {   
-        $posts = Post::latest()->take(20)->get();
 
-        return view('posts.index', compact('posts'));
+        // dd(request('search'));
+        // $posts = Post::latest()->take(20)->get();
+        $posts = Post::latest();
+        if(request('search')){
+            // dd(__FILE__,__LINE__,$posts);
+            $posts->where('title','like','%'.request('search').'%')
+            ->orwhere('body','like','%'.request('search').'%');
+        }
+        
+        // dd(__FILE__,__LINE__,$posts->get());
+        return view('posts.index',['posts'=> $posts->get()]);
 
         
     }
@@ -25,6 +34,7 @@ class PostController extends Controller
      */
     public function create()
     {
+        
         return view('posts.create');
     }
 

@@ -6,6 +6,14 @@
 @section('content')
     <div class="container">
         <h1>Posts</h1>
+        <div class="col-md-6">
+            <div class="mb-3" witd>
+                <form action="{{ route('posts.index') }}" method="GET" class="d-flex">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Search" value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
         <a href="{{ route('posts.create') }}" class="btn btn-primary">Create</a>
         <table class="table">
             <thead>
