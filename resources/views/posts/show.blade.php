@@ -16,7 +16,7 @@
         <p>Updated at: {{ $post->updated_at }}</p>
 
         <div class="code-box mb-3">
-            <pre><code class="Box-sc-g0xbh4-0 giEfVQ" >{{ $post->body }}</code></pre>
+            <pre><code >{{ $post->body }}</code></pre>
             <button class="btn btn-secondary copy-code-btn" data-clipboard-text="{{ $post->body }}">
                 <i class="fas fa-copy"></i> Copy Code
             </button>

@@ -91,12 +91,12 @@ class PostController extends Controller
         
         $request->validate([
             'title' => 'required',
-            'excerpt' => 'required',
+            'body' => 'required',
         ]);
 
         $post->update([
             'title' => $request->input('title'),
-            'excerpt' => $request->input('excerpt'),
+            'body' => $request->input('body'),
         ]);
 
         return redirect()->route('posts.show', $post)->with('success', 'Post updated successfully');

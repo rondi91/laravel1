@@ -15,8 +15,8 @@
         </div>
 
         <div class="form-group">
-            <label for="excerpt">excerpt</label>
-            <textarea name="excerpt" id="excerpt" class="form-control">{{ $post->excerpt }}</textarea>
+            <label for="body">body</label>
+            <textarea name="body" id="body" class="form-control">{{ $post->body }}</textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
