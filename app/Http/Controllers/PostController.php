@@ -27,7 +27,7 @@ class PostController extends Controller
         return view('posts.index',['posts'=> $posts->paginate(10)->withQueryString()
     ]);
 
-        
+    
     }
 
     /**
@@ -37,7 +37,7 @@ class PostController extends Controller
     {
         
         return view('posts.create');
-    }
+    }   
 
     /**
      * Store a newly created resource in storage.
