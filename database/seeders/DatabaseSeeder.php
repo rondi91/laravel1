@@ -27,6 +27,14 @@ class DatabaseSeeder extends Seeder
             
             CategorySeeder::class
              ]);
+        $this->call([
+            
+            PaketSeeder::class
+             ]);
+        $this->call([
+            
+            PelangganSeeder::class
+             ]);
 
 
 

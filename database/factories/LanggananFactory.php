@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Paket;
+use App\Models\Pelanggan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +16,21 @@ class LanggananFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Langganan::class;
     public function definition(): array
     {
+
         return [
-            //
+            'pelanggan_id' => function () {
+                // return factory(\App\Models\Pelanggan::class)->create()->pelanggan_id;
+                return Pelanggan::factory()->create()->pelanggan_id;
+            },
+            'paket_id' => function () {
+                return Paket::factory()->create()->paket_id;
+            },
+            'tanggal_mulai' => $this->faker->date(),
+            'tanggal_berakhir' => $this->faker->date(),
+        
         ];
     }
 }
