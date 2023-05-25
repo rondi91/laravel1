@@ -16,21 +16,33 @@ class LanggananFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    protected $model = Langganan::class;
+    // protected $model = Langganan::class;
     public function definition(): array
     {
 
         return [
+
+
             'pelanggan_id' => function () {
-                // return factory(\App\Models\Pelanggan::class)->create()->pelanggan_id;
-                return Pelanggan::factory()->create()->pelanggan_id;
+                return Pelanggan::factory()->create()->id;
             },
             'paket_id' => function () {
-                return Paket::factory()->create()->paket_id;
+                return paket::factory()->create()->id;
             },
-            'tanggal_mulai' => $this->faker->date(),
-            'tanggal_berakhir' => $this->faker->date(),
-        
         ];
+
+
+
+        //     'pelanggan_id' => function () {
+        //         // return factory(\App\Models\Pelanggan::class)->create()->pelanggan_id;
+        //         return Pelanggan::factory()->create()->pelanggan_id;
+        //     },
+        //     'paket_id' => function () {
+        //         return Paket::factory()->create()->paket_id;
+        //     },
+        //     'tanggal_mulai' => $this->faker->date(),
+        //     'tanggal_berakhir' => $this->faker->date(),
+        
+        // ];
     }
 }

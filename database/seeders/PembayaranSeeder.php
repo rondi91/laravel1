@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pembayaran;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class PembayaranSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Pembayaran::factory()->count(10)->create();
     }
 }

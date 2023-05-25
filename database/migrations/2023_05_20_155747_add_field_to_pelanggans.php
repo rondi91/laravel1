@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pelanggans', function (Blueprint $table) {
-            $table->foreign('langganan_id')->references('langganan_id')->on('langganans');
-        });
+        // Schema::table('pelanggans', function (Blueprint $table) {
+        //     $table->foreign('langganan_id')->references('langganan_id')->on('langganans');
+        // });
     }
 
     /**

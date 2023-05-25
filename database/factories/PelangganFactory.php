@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PelangganFactory extends Factory
 {
-    protected $model = Pelanggan::class;
+    
     /**
      * Define the model's default state.
     
@@ -22,10 +22,7 @@ class PelangganFactory extends Factory
         return [
             'nama_pelanggan' => $this->faker->name,
             'alamat' => $this->faker->address,
-            'nomor_telepon' => $this->faker->phoneNumber,
-            'langganan_id' => function () {
-                return Langganan::factory()->create()->langganan_id;
-            },
+            
         
             //
         ];

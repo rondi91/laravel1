@@ -17,10 +17,8 @@ class PaketFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama_paket' => $this->faker->word,
-            'kecepatan_internet' => $this->faker->randomElement(['10 Mbps', '25 Mbps', '50 Mbps']),
-            'harga_paket' => $this->faker->randomFloat(2, 50, 200),
-            'kuota_maksimum' => $this->faker->randomElement(['Unlimited', '100 GB', '200 GB']),
+            'nama_paket' =>$this->faker->word,
+            'deskripsi' => $this->faker->sentence,
         ];
     }
 }

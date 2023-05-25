@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Langganan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class LanggananSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Langganan::factory()->count(10)->create();
     }
 }

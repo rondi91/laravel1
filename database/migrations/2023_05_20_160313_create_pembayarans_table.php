@@ -12,11 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pembayarans', function (Blueprint $table) {
-            $table->increments('pembayaran_id');
-            $table->integer('langganan_id')->unsigned();
+            $table->increments('id');
+            $table->unsignedInteger('langganan_id');
+            $table->decimal('jumlah_pembayaran', 8, 2);
             $table->date('tanggal_pembayaran');
-            $table->decimal('jumlah_pembayaran', 10, 2);
-            $table->foreign('langganan_id')->references('langganan_id')->on('langganans');
+            $table->timestamps();
+    
+            $table->foreign('langganan_id')->references('id')->on('langganans')->onDelete('cascade');
+        
         });
     }
 

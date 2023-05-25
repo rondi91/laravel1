@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Langganan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class PembayaranFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'langganan_id' => function () {
+                return Langganan::factory()->create()->id;
+            },
+            'jumlah_pembayaran' => $this->faker->randomFloat(2, 100, 1000),
+            'tanggal_pembayaran' => $this->faker->date(),
         ];
     }
 }
