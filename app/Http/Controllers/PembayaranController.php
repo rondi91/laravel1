@@ -13,7 +13,8 @@ class PembayaranController extends Controller
      */
     public function index()
     {
-        //
+        $bayars = Pembayaran::latest()->get();
+        return view('pembayarans.index',['bayars'=>$bayars]);
     }
 
     /**

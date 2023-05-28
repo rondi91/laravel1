@@ -13,7 +13,8 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        //
+        $pelanggan = Pelanggan::latest()->get();
+        return view('pelanggan.index',['pelanggans'=>$pelanggan]);
     }
 
     /**

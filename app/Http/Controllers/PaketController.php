@@ -13,7 +13,8 @@ class PaketController extends Controller
      */
     public function index()
     {
-        //
+        $paksets = Paket::latest()->get();
+        return view('pakets.index',['pakets'=>$paksets]);
     }
 
     /**

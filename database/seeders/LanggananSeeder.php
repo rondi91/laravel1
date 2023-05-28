@@ -13,6 +13,6 @@ class LanggananSeeder extends Seeder
      */
     public function run(): void
     {
-        Langganan::factory()->count(10)->create();
+        Langganan::factory()->count(1)->create();
     }
 }

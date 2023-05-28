@@ -31,10 +31,10 @@ class DatabaseSeeder extends Seeder
             
             PaketSeeder::class
              ]);
-        $this->call([
+        // $this->call([
             
-            PelangganSeeder::class
-             ]);
+        //     PelangganSeeder::class
+        //      ]);
         $this->call([
             
             LanggananSeeder::class
@@ -54,9 +54,9 @@ class DatabaseSeeder extends Seeder
 
 
         
-        // Category::create([
-        //     'name' =>'Web Progaming',
-        //     'slug'=>'web-progaming'
+        // Pelanggan::create([
+        //     'nama_pelanggan' =>'solekah',
+        //     'alamat'=>'rt kidul'
         // ]);
         
         // Category::create([
