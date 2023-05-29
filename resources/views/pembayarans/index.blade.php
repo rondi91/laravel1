@@ -38,7 +38,7 @@
                   {{ $loop->iteration }}
                 </td>
                 <td>
-                  {{ $bayar->langganan_id }}
+                  {{ $bayar->pelanggan->nama_pelanggan }}
                 </td>
                 
                 <td>
