@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Paket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PaketFactory extends Factory
 {
+    protected $model = Paket::class;
     /**
      * Define the model's default state.
      *
@@ -17,8 +19,10 @@ class PaketFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama_paket' =>$this->faker->word,
-            'deskripsi' => $this->faker->sentence,
+            'Nama_Paket' => $this->faker->word,
+            'Kecepatan_Internet' => $this->faker->randomElement(['50 Mbps', '100 Mbps', '200 Mbps']),
+            'Kuota' => $this->faker->randomElement(['100GB', '200GB', '500GB']),
+            'Durasi' => $this->faker->numberBetween(30, 90),
         ];
     }
 }

@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('pakets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_paket');
-            $table->string('deskripsi');
+            $table->string('Nama_Paket');
+            $table->string('Kecepatan_Internet');
+            $table->string('Kuota');
+            $table->integer('Durasi');
             $table->timestamps();
             // 60203
         

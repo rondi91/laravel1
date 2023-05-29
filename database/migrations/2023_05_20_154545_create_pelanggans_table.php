@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('pelanggans', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_pelanggan');
-            $table->string('alamat');
+            $table->string('Nama_Pelanggan');
+            $table->string('Alamat_Pelanggan');
+            $table->string('Nomor_Telepon');
             $table->timestamps();
             
             });

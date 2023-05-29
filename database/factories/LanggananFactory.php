@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Langganan;
 use App\Models\Paket;
 use App\Models\Pelanggan;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -11,15 +12,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LanggananFactory extends Factory
 {
+    
     /**
+     * 
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    // protected $model = Langganan::class;
+    protected $model = Langganan::class;
     public function definition(): array
     {
 
+        
         return [
 
 
@@ -27,11 +31,15 @@ class LanggananFactory extends Factory
                 return Pelanggan::factory()->create()->id;
             },
             'paket_id' => function () {
-                return paket::factory()->create()->id;
+                return Paket::factory()->create()->id;
             },
-        ];
-
-
+            'Tanggal_Mulai' => $this->faker->date,
+            'Tanggal_Berakhir' => $this->faker->date,
+            'Status_Langganan' => $this->faker->randomElement(['Aktif', 'Tidak Aktif']),
+            'updated_at' => now(),
+            'created_at' => now(),
+        
+            ];
 
         //     'pelanggan_id' => function () {
         //         // return factory(\App\Models\Pelanggan::class)->create()->pelanggan_id;
@@ -43,6 +51,6 @@ class LanggananFactory extends Factory
         //     'tanggal_mulai' => $this->faker->date(),
         //     'tanggal_berakhir' => $this->faker->date(),
         
-        // ];
+        
     }
 }

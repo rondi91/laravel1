@@ -8,11 +8,13 @@ use App\Models\Pelanggan;
 
 class PelangganController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        
         $pelanggan = Pelanggan::latest()->get();
         return view('pelanggan.index',['pelanggans'=>$pelanggan]);
     }
@@ -22,7 +24,7 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        //
+        return view('pelanggan.create');
     }
 
     /**

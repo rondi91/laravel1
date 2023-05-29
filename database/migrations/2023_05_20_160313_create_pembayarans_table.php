@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('langganan_id');
-            $table->decimal('jumlah_pembayaran', 8, 2);
-            $table->date('tanggal_pembayaran');
+            $table->integer('langganan_id')->unsigned();
+            $table->date('Tanggal_Pembayaran');
+            $table->decimal('Jumlah_Pembayaran', 10, 2);
             $table->timestamps();
-    
-            $table->foreign('langganan_id')->references('id')->on('langganans')->onDelete('cascade');
+            
+            $table->foreign('langganan_id')->references('id')->on('langganans');
         
         });
     }

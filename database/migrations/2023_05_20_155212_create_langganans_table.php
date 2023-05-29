@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('langganans', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('pelanggan_id');
-            $table->unsignedInteger('paket_id');
+            $table->integer('pelanggan_id')->unsigned();
+            $table->integer('paket_id')->unsigned();
+            $table->date('Tanggal_Mulai');
+            $table->date('Tanggal_Berakhir');
+            $table->string('Status_Langganan');
             $table->timestamps();
-
-            $table->foreign('pelanggan_id')->references('id')->on('pelanggans')->onDelete('cascade');
-            $table->foreign('paket_id')->references('id')->on('pakets')->onDelete('cascade');
-    
+            
+            $table->foreign('pelanggan_id')->references('id')->on('pelanggans');
+            $table->foreign('paket_id')->references('id')->on('pakets');
+        
         });
     }
 

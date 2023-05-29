@@ -10,11 +10,10 @@ class Pembayaran extends Model
     use HasFactory;
 
 
-
-    public function pelanggan ()
-	{           // 1 post punya 1 category
-		return $this->belongsTo(Pelanggan::class);
-	}
+	public function langganan()
+    {
+        return $this->belongsTo(Langganan::class);
+    }
 
 
 }

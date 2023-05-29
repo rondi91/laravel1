@@ -1,32 +1,28 @@
 <!-- resources/views/posts/create.blade.php -->
 
 @extends('layouts.main')
+<!-- pelanggan/create.blade.php -->
+
 
 @section('content')
-    <div class="container">
-        <h1>Create Post</h1>
+<div class="container">
+    <h1>Tambah Pelanggan</h1>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form action="{{ route('posts.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
-            </div>
-            <div class="form-group">
-                <label for="body">Body</label>
-                <textarea class="form-control" id="body" name="body" rows="5">{{ old('body') }}</textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Create</button>
-        </form>
-    </div>
+    <form action="{{ route('pelanggan.store') }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="nama">Nama:</label>
+            <input type="text" name="nama" id="nama" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="alamat">Alamat:</label>
+            <textarea name="alamat" id="alamat" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="no_telepon">No. Telepon:</label>
+            <input type="text" name="no_telepon" id="no_telepon" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+    </form>
+</div>
 @endsection

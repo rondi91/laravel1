@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Langganan;
+use App\Models\Paket;
 use App\Models\Pelanggan;
+use App\Models\Pembayaran;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -16,33 +19,48 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory(10)->create(); 
+        Pelanggan::factory(20)->create();
+        Paket::factory(5)->create();
+        // Langganan::factory(5)->create();
+        // Pembayaran::factory(5)->create();
 
-        // Post::factory(10)->create();
-        // memanggil postseeder
-        $this->call([
-            PostSeeder::class
-             ]);
-        $this->call([
-            
-            CategorySeeder::class
-             ]);
-        $this->call([
-            
-            PaketSeeder::class
-             ]);
+        Langganan::factory(20)->create()->each(function ($langganan) {
+            $langganan->pembayaran()->saveMany(
+                Pembayaran::factory(rand(1, 3))->create(['langganan_id' => $langganan->id])
+            );
+        });
+
+
+
+
+
+        // User::factory(10)->create(); 
+
+        // // Post::factory(10)->create();
+        // // memanggil postseeder
+        // $this->call([
+        //     PostSeeder::class
+        //      ]);
         // $this->call([
             
-        //     PelangganSeeder::class
+        //     CategorySeeder::class
         //      ]);
-        $this->call([
+        // $this->call([
             
-            LanggananSeeder::class
-             ]);
-        $this->call([
+        //     PaketSeeder::class
+        //      ]);
+        // // $this->call([
             
-            PembayaranSeeder::class
-             ]);
+        // //     PelangganSeeder::class
+        // //      ]);
+        // $this->call([
+            
+        //     LanggananSeeder::class
+        //      ]);
+        // $this->call([
+            
+        //     PembayaranSeeder::class
+        //      ]);
 
 
 

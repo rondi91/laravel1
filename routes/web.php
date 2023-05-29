@@ -36,12 +36,12 @@ Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.upda
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
 Route::get('/pelanggans', [PelangganController::class, 'index']);
-Route::get('/pelanggans/create', [pelangganController::class, 'create']);
-Route::post('/pelanggans', [pelangganController::class, 'store']);
-Route::get('/pelanggans/{id}', [pelangganController::class, 'show']);
-Route::get('/pelanggans/{id}/edit', [pelangganController::class, 'edit']);
-Route::put('/pelanggans/{id}', [pelangganController::class, 'update']);
-Route::delete('/pelanggans/{id}', [pelangganController::class, 'destroy']);
+Route::get('/pelanggans/create', [pelangganController::class, 'create'])->name('pelanggan.create');
+Route::post('/pelanggans', [pelangganController::class, 'store'])->name('pelanggan.store');
+Route::get('/pelanggans/{id}', [pelangganController::class, 'show'])->name('pelanggan.show');
+Route::get('/pelanggans/{id}/edit', [pelangganController::class, 'edit'])->name('pelanggan.edit');
+Route::put('/pelanggans/{id}', [pelangganController::class, 'update'])->name('pelanggan.update');
+Route::delete('/pelanggans/{id}', [pelangganController::class, 'destroy'])->name('pelanggan.destroy');
 
 Route::get('/pakets', [PaketController::class, 'index']);
 Route::get('/pakets/create', [paketController::class, 'create']);

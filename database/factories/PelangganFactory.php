@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Langganan;
+use App\Models\Pelanggan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PelangganFactory extends Factory
 {
+    protected $model = Pelanggan::class;
     
     /**
      * Define the model's default state.
@@ -20,9 +22,11 @@ class PelangganFactory extends Factory
     {
 
         return [
-            'nama_pelanggan' => $this->faker->name,
-            'alamat' => $this->faker->address,
-            
+            'Nama_Pelanggan' => $this->faker->name,
+            'Alamat_Pelanggan' => $this->faker->address,
+            'Nomor_Telepon' => $this->faker->phoneNumber,
+            'updated_at' => now(),
+            'created_at' => now(),
         
             //
         ];

@@ -19,10 +19,11 @@ class PembayaranFactory extends Factory
     {
         return [
             'langganan_id' => function () {
-                return Langganan::factory()->create()->id;
+                return \App\Models\Langganan::factory()->create()->id;
             },
-            'jumlah_pembayaran' => $this->faker->randomFloat(2, 100, 1000),
-            'tanggal_pembayaran' => $this->faker->date(),
+            'Tanggal_Pembayaran' => $this->faker->date,
+            'Jumlah_Pembayaran' => $this->faker->randomFloat(2, 100, 1000),
+        
         ];
     }
 }

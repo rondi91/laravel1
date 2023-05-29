@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Paket extends Model
 {
     use HasFactory;
+
+
+
+    public function langganan()
+    {
+        return $this->hasMany(Langganan::class);
+    }
 }
