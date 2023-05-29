@@ -1,8 +1,4 @@
 @extends('layouts.main')
-<!-- resources/views/posts/index.blade.php -->
-{{-- {{ dd(__FILE__,__LINE__,$pelanggans);  }} --}}
-
-<!-- pelanggan/index.blade.php -->
 
 
 @section('content')
@@ -16,7 +12,7 @@
                 <button type="submit" class="btn btn-primary">Cari</button>
             </form>
         </div>
-        
+
     <a href="{{ route('pelanggan.create') }}" class="btn btn-primary mb-3">Tambah Pelanggan</a>
 
     @if (session('success'))

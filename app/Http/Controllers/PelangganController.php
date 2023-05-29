@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePelangganRequest;
 use App\Http\Requests\UpdatePelangganRequest;
 use App\Models\Pelanggan;
+use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
@@ -12,11 +13,22 @@ class PelangganController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        
-        $pelanggan = Pelanggan::latest()->get();
-        return view('pelanggan.index',['pelanggans'=>$pelanggan]);
+        $search = $request->input('search');
+
+        if ($search) {
+            $pelanggans = Pelanggan::where('Nama_Pelanggan', 'like', '%' . $search . '%')
+                ->orWhere('Alamat_Pelanggan', 'like', '%' . $search . '%')
+                ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
+                ->get();
+        } else {
+            $pelanggans = Pelanggan::all();
+        }
+    
+        return view('pelanggan.index', compact('pelanggans'));
+        // $pelanggan = Pelanggan::latest()->get();
+        // return view('pelanggan.index',['pelanggans'=>$pelanggan]);
     }
 
     /**
