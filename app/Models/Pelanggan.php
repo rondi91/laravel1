@@ -9,6 +9,8 @@ class Pelanggan extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
 
     public function langganan()
     {

@@ -32,7 +32,8 @@ class PelangganController extends Controller
      */
     public function store(StorePelangganRequest $request)
     {
-        //
+        Pelanggan::create($request->all());
+        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan created successfully');
     }
 
     /**
@@ -48,7 +49,9 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        //
+        // $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan = $pelanggan;
+        return view('pelanggan.edit', compact('pelanggan'));
     }
 
     /**
@@ -56,7 +59,12 @@ class PelangganController extends Controller
      */
     public function update(UpdatePelangganRequest $request, Pelanggan $pelanggan)
     {
-        //
+        // dd(__FILE__,__LINE__,$request);
+        // $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan = $pelanggan;
+        $pelanggan->update($request->all());
+        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan updated successfully');
+    
     }
 
     /**
@@ -64,6 +72,8 @@ class PelangganController extends Controller
      */
     public function destroy(Pelanggan $pelanggan)
     {
-        //
+        // $pelanggan = Pelanggan::findOrFail($id); 
+        $pelanggan->delete();
+        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan deleted successfully');
     }
 }

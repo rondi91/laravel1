@@ -8,6 +8,15 @@
 @section('content')
 <div class="container">
     <h1>Pelanggan</h1>
+        <div class="mb-3">
+            <form action="{{ route('pelanggan.index') }}" method="GET" class="form-inline">
+                <div class="form-group mr-2">
+                    <input type="text" name="search" class="form-control" placeholder="Cari pelanggan">
+                </div>
+                <button type="submit" class="btn btn-primary">Cari</button>
+            </form>
+        </div>
+        
     <a href="{{ route('pelanggan.create') }}" class="btn btn-primary mb-3">Tambah Pelanggan</a>
 
     @if (session('success'))

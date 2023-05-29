@@ -1,24 +1,29 @@
 @extends('layouts.main')
 
+<!-- pelanggan/edit.blade.php -->
 
 
 @section('content')
-    <h1>Edit Post</h1>
 
-    <form action="{{ route('posts.update', $post) }}" method="POST">
+<div class="container">
+    <h1>Edit Pelanggan</h1>
+
+    <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
         @csrf
         @method('PUT')
-
         <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title" class="form-control" value="{{ $post->title }}">
+            <label for="Nama_Pelanggan">Nama:</label>
+            <input type="text" name="Nama_Pelanggan" id="Nama_Pelanggan" class="form-control" value="{{ $pelanggan->Nama_Pelanggan }}">
         </div>
-
         <div class="form-group">
-            <label for="body">body</label>
-            <textarea name="body" id="body" class="form-control">{{ $post->body }}</textarea>
+            <label for="Alamat_Pelanggan">Alamat:</label>
+            <textarea name="Alamat_Pelanggan" id="Alamat_Pelanggan" class="form-control">{{ $pelanggan->Alamat_Pelanggan }}</textarea>
         </div>
-
-        <button type="submit" class="btn btn-primary">Update</button>
+        <div class="form-group">
+            <label for="Nomor_Telepon">No. Telepon:</label>
+            <input type="text" name="Nomor_Telepon" id="Nomor_Telepon" class="form-control" value="{{ $pelanggan->Nomor_Telepon }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
+</div>
 @endsection
