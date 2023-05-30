@@ -5,16 +5,29 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
 use App\Models\Pembayaran;
+use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bayars = Pembayaran::latest()->get();
-        return view('pembayarans.index',['bayars'=>$bayars]);
+        $search = $request->input('search');
+
+        if ($search) {
+            $pembayaran = Pembayaran::where('Nama_Pembayaran', 'like', '%' . $search . '%')
+                ->orWhere('Alamat_Pembayaran', 'like', '%' . $search . '%')
+                ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
+                ->get();
+        } else {
+            $pembayaran = Pembayaran::latest()->paginate(5)->withQueryString();
+        }
+    
+        return view('pembayaran.index', compact('pembayaran'));
+        // $pelanggan = Pelanggan::latest()->get();
+        // return view('pelanggan.index',['pembayaran'=>$pelanggan]);
     }
 
     /**

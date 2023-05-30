@@ -5,18 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePaketRequest;
 use App\Http\Requests\UpdatePaketRequest;
 use App\Models\Paket;
+use Illuminate\Http\Request;
 
 class PaketController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $paksets = Paket::latest()->get();
-        return view('pakets.index',['pakets'=>$paksets]);
-    }
+    public function index(Request $request)
+    { $search = $request->input('search');
 
+        if ($search) {
+            $pakets = Paket::where('Nama_Paket', 'like', '%' . $search . '%')
+                ->orWhere('Alamat_Paket', 'like', '%' . $search . '%')
+                ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
+                ->get();
+        } else {
+            $pakets = Paket::latest()->paginate(5)->withQueryString();
+        }
+    
+        return view('Pakets.index', compact('pakets'));
+        
+    }
     /**
      * Show the form for creating a new resource.
      */

@@ -44,20 +44,21 @@ Route::put('/pelanggans/{pelanggan}', [pelangganController::class, 'update'])->n
 Route::delete('/pelanggans/{pelanggan}', [pelangganController::class, 'destroy'])->name('pelanggan.destroy');
 Route::get('/pelanggan/search', [pelangganController::class, 'search'])->name('pelanggan.search');
 
-Route::get('/pakets', [PaketController::class, 'index']);
-Route::get('/pakets/create', [paketController::class, 'create']);
-Route::post('/pakets', [paketController::class, 'store']);
-Route::get('/pakets/{id}', [paketController::class, 'show']);
-Route::get('/pakets/{id}/edit', [paketController::class, 'edit']);
-Route::put('/pakets/{id}', [paketController::class, 'update']);
-Route::delete('/pakets/{id}', [paketController::class, 'destroy']);
+Route::get('/pakets', [PaketController::class, 'index'])->name('paket.index');
+Route::get('/pakets/create', [paketController::class, 'create'])->name('paket.create');
+Route::post('/pakets', [paketController::class, 'store'])->name('paket.store');
+Route::get('/pakets/{id}', [paketController::class, 'show'])->name('paket.show');
+Route::get('/pakets/{id}/edit', [paketController::class, 'edit'])->name('paket.edit');
+Route::put('/pakets/{id}', [paketController::class, 'update'])->name('paket.update');
+Route::delete('/pakets/{id}', [paketController::class, 'destroy'])->name('paket.destroy');
+Route::get('/paket/search', [paketController::class, 'search'])->name('paket.search');
 
 
-
-Route::get('/pembayarans', [PembayaranController::class, 'index']);
-Route::get('/pembayarans/create', [pembayaranController::class, 'create']);
-Route::post('/pembayarans', [pembayaranController::class, 'store']);
-Route::get('/pembayarans/{id}', [pembayaranController::class, 'show']);
-Route::get('/pembayarans/{id}/edit', [pembayaranController::class, 'edit']);
-Route::put('/pembayarans/{id}', [pembayaranController::class, 'update']);
-Route::delete('/pembayarans/{id}', [pembayaranController::class, 'destroy']);
+Route::get('/pembayarans', [PembayaranController::class, 'index'])->name('pembayaran.index');
+Route::get('/pembayarans/create', [pembayaranController::class, 'create'])->name('pembayaran.create');
+Route::post('/pembayarans', [pembayaranController::class, 'store'])->name('pembayaran.store');
+Route::get('/pembayarans/{id}', [pembayaranController::class, 'show'])->name('pembayaran.show');
+Route::get('/pembayarans/{id}/edit', [pembayaranController::class, 'edit'])->name('pembayaran.edit');
+Route::put('/pembayarans/{id}', [pembayaranController::class, 'update'])->name('pembayaran.update');
+Route::delete('/pembayarans/{id}', [pembayaranController::class, 'destroy'])->name('pembayaran.destroy');
+Route::get('/pembayran/search', [pembayranController::class, 'search'])->name('pembayaran.search');
