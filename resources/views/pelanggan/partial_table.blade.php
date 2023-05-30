@@ -3,7 +3,15 @@
     <td>{{ $loop->iteration }}</td>
     <td>{{ $data->Nama_Pelanggan }}</td>
     <td>{{ $data->Alamat_Pelanggan }}</td>
-    <td>{{ $data->Nomor_Telepon }}</td>
+    <td>
+        @if ($data->langganan->count() > 0)
+            @foreach ($data->langganan as $langganan)
+                {{ $langganan->paket->Kecepatan_Internet }}
+            @endforeach
+        @else
+            Belum berlangganan paket
+        @endif
+    </td>
     <td>
         <a href="{{ route('pelanggan.edit', $data->id) }}" class="btn btn-primary">Edit</a>
         <form action="{{ route('pelanggan.destroy', $data->id) }}" method="POST" class="d-inline">

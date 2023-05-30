@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
+use App\Models\Langganan;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,8 @@ class PembayaranController extends Controller
      */
     public function create()
     {
-        //
+        $langganan = Langganan::latest()->get();
+        return view('pembayaran.form', compact('langganan'));
     }
 
     /**
@@ -51,38 +53,50 @@ class PembayaranController extends Controller
      */
     public function store(StorePembayaranRequest $request)
     {
-        //
+        Pembayaran::create($request->all());
+        return redirect()->route('pembayaran.index')->with('success', 'Pembayaran created successfully');
+   
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Pembayaran $pembayaran)
+    public function detail($id)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+        return view('pembayaran.detail', compact('pembayaran'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pembayaran $pembayaran)
+    public function edit( $id)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+        $langganan = Langganan::all();
+        return view('pembayaran.form', compact('pembayaran', 'langganan'));
+    
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
+    // public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
+    public function update($id)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran->update(request()->all());
+        return redirect()->route('pembayaran.index')->with('success', 'Pembayaran updated successfully');
+    
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pembayaran $pembayaran)
+    public function destroy($id)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran->delete();
+        return redirect()->route('pembayaran.index')->with('success', 'Pembayaran deleted successfully');
     }
 }
