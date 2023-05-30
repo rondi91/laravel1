@@ -23,13 +23,25 @@ class PelangganController extends Controller
                 ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
                 ->get();
         } else {
-            $pelanggans = Pelanggan::all();
+            $pelanggans = Pelanggan::latest()->paginate(5)->withQueryString();
         }
     
         return view('pelanggan.index', compact('pelanggans'));
         // $pelanggan = Pelanggan::latest()->get();
         // return view('pelanggan.index',['pelanggans'=>$pelanggan]);
     }
+
+    public function search(Request $request)
+{
+    $search = $request->input('search');
+    $pelanggans = Pelanggan::where('Nama_Pelanggan', 'LIKE', "%{$search}%")
+        ->orWhere('Alamat_Pelanggan', 'LIKE', "%{$search}%")
+        ->orWhere('Nomor_Telepon', 'LIKE', "%{$search}%")
+        ->paginate(10);
+
+    return view('pelanggan.partial_table', compact('pelanggans'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -88,4 +100,6 @@ class PelangganController extends Controller
         $pelanggan->delete();
         return redirect()->route('pelanggan.index')->with('success', 'Pelanggan deleted successfully');
     }
+
+
 }

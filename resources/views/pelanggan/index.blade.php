@@ -7,7 +7,7 @@
         <div class="mb-3">
             <form action="{{ route('pelanggan.index') }}" method="GET" class="form-inline">
                 <div class="form-group mr-2">
-                    <input type="text" name="search" class="form-control" placeholder="Cari pelanggan">
+                    <input type="text" name="search" id="searchinput" class="form-control" placeholder="Cari pelanggan">
                 </div>
                 <button type="submit" class="btn btn-primary">Cari</button>
             </form>
@@ -31,10 +31,13 @@
                 <th>Aksi</th>
             </tr>
         </thead>
-        <tbody>
+        @php
+                        $number = ($pelanggans->currentPage() - 1) * $pelanggans->perPage() + 1;
+                    @endphp
+        <tbody id="pelanggan-table">
             @foreach ($pelanggans as $data)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $number++ }}</td>
                     <td>{{ $data->Nama_Pelanggan }}</td>
                     <td>{{ $data->Alamat_Pelanggan }}</td>
                     <td>{{ $data->Nomor_Telepon }}</td>
@@ -50,5 +53,32 @@
             @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        {{ $pelanggans->links() }}
+    </div>
+    
   </div>
+  
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('#searchinput').on('keyup', function() {
+            var query = $(this).val();
+            console.log(query);
+    
+            $.ajax({
+                url: "{{ route('pelanggan.search') }}",
+                type: "GET",
+                data: {
+                    search: query
+                },
+                success: function(response) {
+                    $('#pelanggan-table').html(response);
+                }
+            });
+        });
+    });
+    </script>
+    
 @endsection
