@@ -17,10 +17,8 @@ class PembayaranController extends Controller
         $search = $request->input('search');
 
         if ($search) {
-            $pembayaran = Pembayaran::where('Nama_Pembayaran', 'like', '%' . $search . '%')
-                ->orWhere('Alamat_Pembayaran', 'like', '%' . $search . '%')
-                ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
-                ->get();
+            $pembayaran = Pembayaran::where('langganan_id', 'like', '%' . $search . '%')
+                ->paginate(5)->withQueryString();
         } else {
             $pembayaran = Pembayaran::latest()->paginate(5)->withQueryString();
         }
@@ -30,6 +28,16 @@ class PembayaranController extends Controller
         // return view('pelanggan.index',['pembayaran'=>$pelanggan]);
     }
 
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $pembayaran = Pembayaran::whereHas('langganan.pelanggan', function ($query) use ($search) {
+            $query->where('Nama_Pelanggan', 'LIKE', "%{$search}%");
+        })->paginate(10);
+
+        return view('pembayaran.partial_table', compact('pembayaran'));
+    }
     /**
      * Show the form for creating a new resource.
      */

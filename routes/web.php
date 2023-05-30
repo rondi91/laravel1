@@ -61,4 +61,4 @@ Route::get('/pembayarans/{id}', [pembayaranController::class, 'show'])->name('pe
 Route::get('/pembayarans/{id}/edit', [pembayaranController::class, 'edit'])->name('pembayaran.edit');
 Route::put('/pembayarans/{id}', [pembayaranController::class, 'update'])->name('pembayaran.update');
 Route::delete('/pembayarans/{id}', [pembayaranController::class, 'destroy'])->name('pembayaran.destroy');
-Route::get('/pembayran/search', [pembayranController::class, 'search'])->name('pembayaran.search');
+Route::get('/pembayran/search', [pembayaranController::class, 'search'])->name('pembayaran.search');
