@@ -42,7 +42,7 @@
                             <form action="{{ route('posts.destroy', $post) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger" onclick="alert('yakin hapus')">Delete</button>
                             </form>
                         </td>
                     </tr>

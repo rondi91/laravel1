@@ -46,7 +46,7 @@
                         <form action="{{ route('pelanggan.destroy', $data->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Hapus</button>
+                            <button type="submit" class="btn btn-danger" onclick="alert('yakin hapus')">Hapus</button>
                         </form>
                     </td>
                 </tr>
@@ -73,8 +73,8 @@
                 data: {
                     search: query
                 },
-                success: function(response) {
-                    $('#pelanggan-table').html(response);
+                success: function(data) {
+                    $('#pelanggan-table').html(data);
                 }
             });
         });
