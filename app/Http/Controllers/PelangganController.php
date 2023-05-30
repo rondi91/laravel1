@@ -95,13 +95,18 @@ class PelangganController extends Controller
     {
         
         $search = $request->input('search');
+    $pelanggan = Pelanggan::where('Nama_Pelanggan', 'LIKE', "%{$search}%")
+        ->orWhere('Alamat_Pelanggan', 'LIKE', "%{$search}%")
+        ->orWhere('Nomor_Telepon', 'LIKE', "%{$search}%")
+        ->paginate(10);
 
-        $pelanggan = Pelanggan::where('Nama_Pelanggan', 'like', '%' . $search . '%')
-            ->orWhere('Alamat_Pelanggan', 'like', '%' . $search . '%')
-            ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
-            ->get();
-    
-        return view('pelanggan.index', compact('pelanggan'));
+    $view = view('pelanggan.partial_table', compact('pelanggan'))->render();
+    $pagination = $pelanggan->links()->render();
+
+    return response()->json([
+        'table' => $view,
+        'pagination' => $pagination
+    ]);
         // return view('pelanggan.index', compact('pelanggan'));
     }
 }

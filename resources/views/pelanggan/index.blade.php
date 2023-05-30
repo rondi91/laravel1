@@ -81,13 +81,23 @@
   <script>
     $(document).ready(function() {
         $('#searchinput').on('keyup', function() {
-            var searchValue = $(this).val().toLowerCase();
+            var query = $(this).val();
+            // console.log('OK');
 
-            $('tbody tr').filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
+            $.ajax({
+                url: "{{ route('pelanggan.liveSearch') }}",
+                type: "GET",
+                data: {
+                    search: query,
+                    page: "{{ $pelanggan->currentPage() }}"
+                },
+                success: function(data) {
+                    $('#pelanggan-table').html(data.table);
+                    $('.pagination').html(data.pagination);
+                }
             });
         });
     });
 </script>
-  
+            
 @endsection
