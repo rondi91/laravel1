@@ -24,7 +24,7 @@ class PelangganController extends Controller
                 ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
                 ->get();
         } else {
-            $pelanggan = Pelanggan::latest()->get();
+            $pelanggan = Pelanggan::latest()->paginate(3)->withQueryString();
         }
     
         return view('pelanggan.index', compact('pelanggan'));

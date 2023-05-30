@@ -36,10 +36,13 @@
                 <th>Aksi</th>
             </tr>
         </thead>
+        @php
+                        $number = ($pelanggan->currentPage() - 1) * $pelanggan->perPage() + 1;
+                    @endphp
         <tbody id="pelanggan-table">
             @foreach ($pelanggan as $data)
                 <tr>
-                    <td>{{ $data->id }}</td>
+                    <td>{{ $number++}}</td>
                     <td>{{ $data->Nama_Pelanggan }}</td>
                     <td>{{ $data->Alamat_Pelanggan }}</td>
                     <td>{{ $data->Nomor_Telepon }}</td>
@@ -52,10 +55,16 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
-
+                @endforeach
+            </tbody>
+            
+            
+            
+        </table>
+        
+        <div class="d-flex justify-content-center">
+            {{ $pelanggan->links() }}
+        </div>
 
     
 
