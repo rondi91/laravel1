@@ -15,18 +15,19 @@ class PelangganController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('search');
+        // dd(__FILE__,__LINE__,$request);
+        $search = $request->input('searchinput');
 
         if ($search) {
-            $pelanggans = Pelanggan::where('Nama_Pelanggan', 'like', '%' . $search . '%')
+            $pelanggan = Pelanggan::where('Nama_Pelanggan', 'like', '%' . $search . '%')
                 ->orWhere('Alamat_Pelanggan', 'like', '%' . $search . '%')
                 ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
                 ->get();
         } else {
-            $pelanggans = Pelanggan::all();
+            $pelanggan = Pelanggan::latest()->get();
         }
     
-        return view('pelanggan.index', compact('pelanggans'));
+        return view('pelanggan.index', compact('pelanggan'));
         // $pelanggan = Pelanggan::latest()->get();
         // return view('pelanggan.index',['pelanggans'=>$pelanggan]);
     }
@@ -87,5 +88,20 @@ class PelangganController extends Controller
         // $pelanggan = Pelanggan::findOrFail($id); 
         $pelanggan->delete();
         return redirect()->route('pelanggan.index')->with('success', 'Pelanggan deleted successfully');
+    }
+
+
+    public function liveSearch(Request $request)
+    {
+        
+        $search = $request->input('search');
+
+        $pelanggan = Pelanggan::where('Nama_Pelanggan', 'like', '%' . $search . '%')
+            ->orWhere('Alamat_Pelanggan', 'like', '%' . $search . '%')
+            ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
+            ->get();
+    
+        return view('pelanggan.index', compact('pelanggan'));
+        // return view('pelanggan.index', compact('pelanggan'));
     }
 }

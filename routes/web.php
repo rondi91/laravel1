@@ -42,6 +42,9 @@ Route::get('/pelanggans/{id}', [pelangganController::class, 'show'])->name('pela
 Route::get('/pelanggans/{pelanggan}/edit', [pelangganController::class, 'edit'])->name('pelanggan.edit');
 Route::put('/pelanggans/{pelanggan}', [pelangganController::class, 'update'])->name('pelanggan.update');
 Route::delete('/pelanggans/{pelanggan}', [pelangganController::class, 'destroy'])->name('pelanggan.destroy');
+// routes/web.php
+Route::get('/pelanggans/live-search', [pelangganController::class, 'liveSearch'])->name('pelanggan.liveSearch');
+
 
 Route::get('/pakets', [PaketController::class, 'index']);
 Route::get('/pakets/create', [paketController::class, 'create']);

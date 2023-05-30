@@ -21,8 +21,9 @@
   <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
   <!-- endinject -->
         <link rel="shortcut icon" href="{{ asset('images/favicon.png')}}" >
-
-
+{{-- rondi tambahan --}}
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 </head>
@@ -63,6 +64,9 @@
   </div>
   <!-- container-scroller -->
 
+  {{-- rondi tambahan --}}
+  {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> --}}
+  {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
   <!-- plugins:js -->
   <script src="vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
