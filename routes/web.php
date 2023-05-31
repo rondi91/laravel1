@@ -64,3 +64,4 @@ Route::delete('/pembayarans/{id}', [pembayaranController::class, 'destroy'])->na
 Route::get('/pembayran/search', [pembayaranController::class, 'search'])->name('pembayaran.search');
 Route::get('/pembayran/{id}/detail', [pembayaranController::class, 'detail'])->name('pembayaran.detail');
 Route::get('/pembayran/print', [pembayaranController::class, 'print'])->name('pembayaran.print');
+Route::get('/pembayaran/searchPelanggan', [pembayaranController::class, 'searchPelanggan'])->name('pembayaran.searchPelanggan');

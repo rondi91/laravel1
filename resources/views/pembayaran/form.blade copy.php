@@ -13,11 +13,14 @@
             @endif
 
             <div class="mb-3">
-                <div class="form-group">
-                    <label for="pelanggan_id">Pelanggan</label>
-                    <select class="form-control select-search-pelanggan" name="langganan_id"> </select>
-                </div>
-                
+                <label for="langganan_id" class="form-label">Langganan</label>
+                <select name="langganan_id" id="langganan_id" class="form-control">
+                    @foreach($langganan as $data)
+                        <option value="{{ $data->id }}" {{ isset($pembayaran) && $pembayaran->langganan_id == $data->id ? 'selected' : '' }}>
+                            {{ $data->pelanggan->Nama_Pelanggan }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3">
@@ -34,26 +37,4 @@
             <a href="{{ route('pembayaran.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
-
-    
-    <script>
-        $(document).ready(function() {
-            $('.select-search-pelanggan').select2({
-                placeholder: 'Pilih pelanggan',
-                ajax: {
-                    url: '{{ route("pembayaran.searchPelanggan") }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: true
-                },
-                minimumInputLength: 1
-            });
-        });
-        </script>
-        
 @endsection

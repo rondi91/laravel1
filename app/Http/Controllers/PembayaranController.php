@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
 use App\Models\Langganan;
+use App\Models\Pelanggan;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
@@ -99,4 +100,25 @@ class PembayaranController extends Controller
         $pembayaran->delete();
         return redirect()->route('pembayaran.index')->with('success', 'Pembayaran deleted successfully');
     }
+
+    public function searchPelanggan(Request $request)
+{
+    $searchTerm = $request->input('term');
+    $pelanggan = Pelanggan::join('langganans', 'pelanggans.id', '=', 'langganans.pelanggan_id')
+    ->where('pelanggans.Nama_Pelanggan', 'LIKE', "%{$searchTerm}%")
+    ->select('pelanggans.id', 'pelanggans.Nama_Pelanggan', 'langganans.id AS langganan_id')
+    ->get();
+
+        $results = [];
+        foreach ($pelanggan as $plg) {
+            $results[] = [
+                'pelanggan_id' => $plg->id,
+                'text' => $plg->Nama_Pelanggan,
+                'id' => $plg->langganan_id
+            ];
+        }
+
+        return response()->json($results);
+
+}
 }
