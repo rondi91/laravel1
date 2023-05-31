@@ -28,7 +28,7 @@
                     <tr>
                         <td>{{ $data->id }}</td>
                         <td>{{ $data->langganan->pelanggan->Nama_Pelanggan }}</td>
-                        <td>{{ $data->Jumlah_Pembayaran }}</td>
+                        <td>{{ 'Rp ' . number_format($data->Jumlah_Pembayaran , 2, ',', '.')}}</td>
                         <td>{{ \Carbon\Carbon::parse($data->Tanggal_Pembayaran)->format('d F Y')  }}</td>
                         <td>
                             <a href="{{ route('pembayaran.edit', $data->id) }}" class="btn btn-primary">Edit</a>

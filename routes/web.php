@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/ff', function () {
     return view('admin.dashboard');
 });
+
 
 
 
@@ -65,3 +66,4 @@ Route::get('/pembayran/search', [pembayaranController::class, 'search'])->name('
 Route::get('/pembayran/{id}/detail', [pembayaranController::class, 'detail'])->name('pembayaran.detail');
 Route::get('/pembayran/print', [pembayaranController::class, 'print'])->name('pembayaran.print');
 Route::get('/pembayaran/searchPelanggan', [pembayaranController::class, 'searchPelanggan'])->name('pembayaran.searchPelanggan');
+Route::get('/', [pembayaranController::class, 'AdminDashboard'])->name('admin.dashboard');

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePembayaranRequest;
 use App\Models\Langganan;
 use App\Models\Pelanggan;
 use App\Models\Pembayaran;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
@@ -121,4 +122,22 @@ class PembayaranController extends Controller
         return response()->json($results);
 
 }
+
+public function AdminDashboard()
+{
+    // Total Pembayaran Hari Ini
+    $totalPembayaranHariIni = Pembayaran::whereDate('Tanggal_Pembayaran', Carbon::today())->sum('Jumlah_Pembayaran');
+
+    // Total Pembayaran Bulan Ini
+    $totalPembayaranBulanIni = Pembayaran::whereMonth('Tanggal_Pembayaran', Carbon::now()->month)->sum('Jumlah_Pembayaran');
+
+    // Total Pembayaran Tahun Ini
+    $totalPembayaranTahunIni = Pembayaran::whereYear('Tanggal_Pembayaran', Carbon::now()->year)->sum('Jumlah_Pembayaran');
+
+    // Pembayaran Terakhir
+    $pembayaranTerakhir = Pembayaran::orderBy('Tanggal_Pembayaran', 'desc')->take(10)->get();
+
+    return view('admin.dashboard', compact('totalPembayaranHariIni', 'totalPembayaranBulanIni', 'totalPembayaranTahunIni', 'pembayaranTerakhir'));
+}
+
 }
