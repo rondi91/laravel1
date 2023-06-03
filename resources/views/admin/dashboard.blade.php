@@ -583,6 +583,147 @@
           </div>
         </div>
       </div>
+
+      <div class="container">
+        <h1>SkyDash Admin</h1>
+        
+        
+        <div class="row">
+          <div class="col-md-6">
+              <h3>Total Pembayaran Hari Ini</h3>
+              <p>{{ $totalPembayaranHariIni }}</p>
+          </div>
+          <div class="col-md-6">
+              <h3>Total Pembayaran Bulan Ini</h3>
+              <p>{{ $totalPembayaranBulanIni }}</p>
+          </div>
+      </div>
+      
+      <div class="row">
+          <div class="col-md-12">
+              <h3>Total Pembayaran Tahun Ini</h3>
+              <p>{{ $totalPembayaranTahunIni }}</p>
+          </div>
+      </div>
+      
+      <div class="row">
+          <div class="col-md-12">
+              <h3>Tabel Pembayaran Terakhir</h3>
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>No.</th>
+                          <th>Nama Pelanggan</th>
+                          <th>Tanggal Pembayaran</th>
+                          <th>Total Pembayaran</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach($pembayaranTerakhir as $index => $pembayaran)
+                          <tr>
+                              <td>{{ $index + 1 }}</td>
+                              <td>{{ $pembayaran->langganan->pelanggan->Nama_Pelanggan }}</td>
+                              <td>{{ \Carbon\Carbon::parse($pembayaran->Tanggal_Pembayaran)->format('d F Y') }}</td>
+                              <td>{{ $pembayaran->Jumlah_Pembayaran }}</td>
+                          </tr>
+                      @endforeach
+                  </tbody>
+              </table>
+          </div>
+      </div>
+
+      {{-- <div class="row">
+        <div class="col-md-12">
+            <h3>Grafik Pembayaran</h3>
+            <div class="form-group">
+                <label for="selectTahun">Pilih Tahun:</label>
+                <select id="selectTahun" class="form-control">
+                    @foreach($tahunPembayaran as $tahun)
+                        <option value="{{ $tahun }}" {{ $tahun == $selectedTahun ? 'selected' : '' }}>{{ $tahun }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <canvas id="grafikPembayaran"></canvas>
+        </div>
+    </div>
+     --}}
+    
     
 
-    @endsection
+{{-- 
+
+    <script>
+$(document).ready(function() {
+    // Ambil data pembayaran dari controller dan lewati ke JavaScript
+    var dataPembayaran = {!! json_encode($dataPembayaran) !!};
+
+    // Inisialisasi grafik dengan menggunakan Chart.js
+    var ctx = document.getElementById('grafikPembayaran').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: dataPembayaran.labels,
+            datasets: [{
+                label: 'Total Pembayaran',
+                data: dataPembayaran.data,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    ticks: {
+                        callback: function(value, index, values) {
+                            // Konversi value (bulan) menjadi nama bulan
+                            var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                            var monthIndex = parseInt(value) - 1;
+                            return monthNames[monthIndex];
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 100000 // Sesuaikan jika diperlukan
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Total Pembayaran (Rp)'
+                    }
+                }
+            }
+        }
+    });
+
+    // Fungsi untuk mengambil data pembayaran berdasarkan tahun yang dipilih
+    function getDataPembayaran(tahun) {
+        $.ajax({
+            url: "{{ route('pembayaran.getDataPembayaran') }}",
+            type: "POST",
+            data: {
+                tahun: tahun
+            },
+            dataType: 'json',
+            success: function(response) {
+                // Perbarui data pembayaran pada grafik
+                chart.data.labels = response.labels;
+                chart.data.datasets[0].data = response.data;
+                chart.update();
+            },
+            error: function(xhr, textStatus, error) {
+                console.log(error);
+            }
+        });
+    }
+
+    // Handler event onchange untuk select tahun
+    $('#selectTahun').change(function() {
+        var tahun = $(this).val();
+        getDataPembayaran(tahun);
+    });
+});
+</script>
+
+
+    @endsection --}}

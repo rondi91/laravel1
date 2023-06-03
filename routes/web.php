@@ -67,3 +67,4 @@ Route::get('/pembayran/{id}/detail', [pembayaranController::class, 'detail'])->n
 Route::get('/pembayran/print', [pembayaranController::class, 'print'])->name('pembayaran.print');
 Route::get('/pembayaran/searchPelanggan', [pembayaranController::class, 'searchPelanggan'])->name('pembayaran.searchPelanggan');
 Route::get('/', [pembayaranController::class, 'AdminDashboard'])->name('admin.dashboard');
+Route::post('pembayaran/getDataPembayaran', [PembayaranController::class,'getDataPembayaran'])->name('pembayaran.getDataPembayaran');

@@ -9,6 +9,7 @@ use App\Models\Pelanggan;
 use App\Models\Pembayaran;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PembayaranController extends Controller
 {
@@ -123,21 +124,81 @@ class PembayaranController extends Controller
 
 }
 
-public function AdminDashboard()
+    public function AdminDashboard()
+    {
+        // Total Pembayaran Hari Ini
+        $totalPembayaranHariIni = Pembayaran::whereDate('Tanggal_Pembayaran', Carbon::today())->sum('Jumlah_Pembayaran');
+
+        // Total Pembayaran Bulan Ini
+        $totalPembayaranBulanIni = Pembayaran::whereMonth('Tanggal_Pembayaran', Carbon::now()->month)->sum('Jumlah_Pembayaran');
+
+        // Total Pembayaran Tahun Ini
+        $totalPembayaranTahunIni = Pembayaran::whereYear('Tanggal_Pembayaran', Carbon::now()->year)->sum('Jumlah_Pembayaran');
+
+        // Pembayaran Terakhir
+        $pembayaranTerakhir = Pembayaran::orderBy('Tanggal_Pembayaran', 'desc')->take(10)->get();
+        // Data untuk grafik
+        $chartData = DB::table('pembayarans')
+        ->select(DB::raw('MONTH(Tanggal_Pembayaran) AS month'), DB::raw('SUM(Jumlah_Pembayaran) AS total'))
+        ->groupBy('month')
+        ->orderBy('month')
+        ->pluck('total')
+        ->toArray();
+
+        $chartLabels = DB::table('pembayarans')
+            ->select(DB::raw('MONTH(Tanggal_Pembayaran) AS month'))
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('month')
+            ->toArray();
+
+        // Data Pembayaran Bulan Ini
+        $dataPembayaranBulanIni = Pembayaran::whereMonth('Tanggal_Pembayaran', Carbon::now()->month)
+        ->select('Tanggal_Pembayaran', DB::raw('SUM(Jumlah_Pembayaran) as total'))
+        ->groupBy('Tanggal_Pembayaran')
+        ->get();
+
+        $labels = $dataPembayaranBulanIni->pluck('Tanggal_Pembayaran')->toArray();
+        $data = $dataPembayaranBulanIni->pluck('total')->toArray();
+
+        $dataPembayaranBulanIni = [
+        'labels' => $labels,
+        'data' => $data,
+        ];
+
+        return view('admin.dashboard', compact('totalPembayaranHariIni', 'totalPembayaranBulanIni', 'totalPembayaranTahunIni',         
+        'pembayaranTerakhir','dataPembayaranBulanIni'));
+
+
+    
+    }
+    public function getDataPembayaran(Request $request)
 {
-    // Total Pembayaran Hari Ini
-    $totalPembayaranHariIni = Pembayaran::whereDate('Tanggal_Pembayaran', Carbon::today())->sum('Jumlah_Pembayaran');
+    $tahun = $request->input('tahun');
 
-    // Total Pembayaran Bulan Ini
-    $totalPembayaranBulanIni = Pembayaran::whereMonth('Tanggal_Pembayaran', Carbon::now()->month)->sum('Jumlah_Pembayaran');
+    // Query untuk mengambil data pembayaran berdasarkan tahun
+    $dataPembayaran = Pembayaran::select(DB::raw('MONTH(tanggal) as bulan'), DB::raw('SUM(Jumlah_Pembayaran) as total'))
+        ->whereYear('tanggal', $tahun)
+        ->groupBy('bulan')
+        ->orderBy('bulan')
+        ->get();
 
-    // Total Pembayaran Tahun Ini
-    $totalPembayaranTahunIni = Pembayaran::whereYear('Tanggal_Pembayaran', Carbon::now()->year)->sum('Jumlah_Pembayaran');
+    // Proses data pembayaran untuk disiapkan ke JavaScript
+    $labels = [];
+    $data = [];
 
-    // Pembayaran Terakhir
-    $pembayaranTerakhir = Pembayaran::orderBy('Tanggal_Pembayaran', 'desc')->take(10)->get();
+    foreach ($dataPembayaran as $item) {
+        $labels[] = $item->bulan;
+        $data[] = $item->total;
+    }
 
-    return view('admin.dashboard', compact('totalPembayaranHariIni', 'totalPembayaranBulanIni', 'totalPembayaranTahunIni', 'pembayaranTerakhir'));
+    $response = [
+        'labels' => $labels,
+        'data' => $data,
+    ];
+
+    return response()->json($response);
 }
+
 
 }
