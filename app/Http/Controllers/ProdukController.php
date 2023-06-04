@@ -14,10 +14,10 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        // $produks = Produk::with('harga.warna', 'harga.size')->get();
+        $produks = Produk::with('harga.warna', 'harga.size')->latest()->paginate(5);
         
         
-        $produks = Harga::with('produk', 'warna','size')->latest()->paginate(5);
+        // $produks = Harga::with('produk', 'warna','size')->latest()->paginate(5);
         
         return view('produks.index', compact('produks'));
     }
