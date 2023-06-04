@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProdukRequest;
 use App\Http\Requests\UpdateProdukRequest;
 use App\Models\Harga;
 use App\Models\Produk;
+use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
@@ -14,12 +15,24 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $produks = Produk::with('harga.warna', 'harga.size')->latest()->paginate(5);
+        // $produks = Produk::with('harga.warna', 'harga.size')->latest()->paginate(5);
         
         
-        // $produks = Harga::with('produk', 'warna','size')->latest()->paginate(5);
+        $produks = Harga::with('produk', 'warna','size')->paginate(5);
         
         return view('produks.index', compact('produks'));
+    }
+    public function search(Request $request)
+    {
+        return 'ok';
+        $search = $request->input('search');
+        $produks = Harga::whereHas('warna', function ($query) use ($search) {
+            $query->where('warna', 'LIKE', "%{$search}%");
+        })->paginate(10);
+
+        
+
+        return view('produks.partial_table', compact('produks'));
     }
 
     /**

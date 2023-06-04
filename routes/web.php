@@ -40,3 +40,4 @@ Route::get('/produk/{produk}', [ProdukController::class, 'show'])->name('produk.
 Route::get('/produk/{produk}/edit', [ProdukController::class, 'edit'])->name('produk.edit');
 Route::put('/produk/{produk}', [ProdukController::class, 'update'])->name('produk.update');
 Route::delete('/produk/{produk}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+Route::get('/produk/search', [ProdukController::class, 'search'])->name('produk.search');
