@@ -17,7 +17,7 @@ class ProdukController extends Controller
         // $produks = Produk::with('harga.warna', 'harga.size')->get();
         
         
-        $produks = Harga::all();
+        $produks = Harga::with('produk', 'warna','size')->get();
         // dd(__FILE__,__LINE__,$produks);
         return view('produks.index', compact('produks'));
     }
