@@ -17,8 +17,8 @@ class ProdukController extends Controller
         // $produks = Produk::with('harga.warna', 'harga.size')->get();
         
         
-        $produks = Harga::with('produk', 'warna','size')->get();
-        // dd(__FILE__,__LINE__,$produks);
+        $produks = Harga::with('produk', 'warna','size')->latest()->paginate(5);
+        
         return view('produks.index', compact('produks'));
     }
 

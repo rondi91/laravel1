@@ -23,6 +23,7 @@ class HargaFactory extends Factory
             'produk_id' => Produk::factory()->create()->id,
             'warna_id' => Warna::factory()->create()->id,
             'size_id' => Size::factory()->create()->id,
+            'stock' => $this->faker->numberBetween(10,20),
             'harga' => $this->faker->randomFloat(2, 10, 100),
         ];
     }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('produk_id');
             $table->unsignedBigInteger('warna_id');
             $table->unsignedBigInteger('size_id');
+            $table->integer('stock');
             $table->decimal('harga', 10, 2);
             $table->timestamps();
 
