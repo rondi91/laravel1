@@ -4,8 +4,15 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-
+use App\Models\DetailPesanan;
+use App\Models\Harga;
+use App\Models\Pelanggan;
+use App\Models\Pesan;
+use App\Models\Produk;
+use App\Models\Size;
+use App\Models\Transactions;
 use App\Models\User;
+use App\Models\Warna;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,7 +24,15 @@ class DatabaseSeeder extends Seeder
     {
 
         User::factory(10)->create(); 
-
+        // Pelanggan::factory(10)->create(); 
+        Produk::factory(10)->create(); 
+        Warna::factory(3)->create(); 
+        Size::factory(4)->create(); 
+        Pesan::factory(3)->create(); 
+        DetailPesanan::factory(3)->create(); 
+        Harga::factory(10)->create(); 
+        Transactions::factory(10)->create(); 
+        
         // Post::factory(10)->create();
         // memanggil postseeder
         $this->call([
