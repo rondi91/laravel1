@@ -13,24 +13,32 @@ class ProdukController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // $produks = Produk::with('harga.warna', 'harga.size')->latest()->paginate(5);
         
-        
-        $produks = Harga::with('produk', 'warna','size')->paginate(5);
+        $search = $request->input('search');
+
+        if ($search) {
+            $produks = Harga::whereHas('produk', function ($query) use ($search) {
+                $query->where('nama_produk', 'LIKE', "%{$search}%");
+            })->paginate(10);
+        } else {
+            $produks = Harga::with('produk', 'warna','size')->paginate(5);
+        }
+    
+              
         
         return view('produks.index', compact('produks'));
     }
     public function search(Request $request)
     {
-        return 'ok';
+        
         $search = $request->input('search');
-        $produks = Harga::whereHas('warna', function ($query) use ($search) {
-            $query->where('warna', 'LIKE', "%{$search}%");
+        $produks = Harga::whereHas('produk', function ($query) use ($search) {
+            $query->where('nama_produk', 'LIKE', "%{$search}%");
         })->paginate(10);
 
-        
 
         return view('produks.partial_table', compact('produks'));
     }

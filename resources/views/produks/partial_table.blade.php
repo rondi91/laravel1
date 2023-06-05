@@ -1,7 +1,7 @@
 @php
-        
-$number = ($produks->currentPage() - 1) * $produks->perPage() + 1;
-@endphp
+        $pkt ="belum terdaftar";
+                        $number = ($produks->currentPage() - 1) * $produks->perPage() + 1;
+                    @endphp
 <tbody>
 {{-- cobah pindah commit --}}
 @foreach ($produks as $produk)
