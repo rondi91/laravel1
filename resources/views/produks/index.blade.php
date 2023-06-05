@@ -12,7 +12,7 @@
                 </form>
             </div>
 
-        <a href="{{ route('produk.create') }}" class="btn btn-primary mb-3">Tambah Produk</a>
+            <a href="{{ route('produk.create') }}" class="btn btn-primary mb-3">Tambah Produk</a>
             @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -31,11 +31,11 @@
                     <th>Aksi</th>
                 </tr>
             </thead>
+            <tbody id="produk-table">
                      @php
         
                         $number = ($produks->currentPage() - 1) * $produks->perPage() + 1;
                     @endphp
-            <tbody id="produk-table">
                 {{-- cobah pindah commit --}}
                 @foreach ($produks as $produk)
                     <tr>

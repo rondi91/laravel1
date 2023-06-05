@@ -6,6 +6,9 @@ use App\Http\Requests\StoreProdukRequest;
 use App\Http\Requests\UpdateProdukRequest;
 use App\Models\Harga;
 use App\Models\Produk;
+use App\Models\ProdukVariasi;
+use App\Models\Size;
+use App\Models\Warna;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -48,7 +51,10 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
+        $sizes = Size::all();
+        $warna = Warna::all();
+
+        return view('produks.create', compact('sizes', 'warna'));
     }
 
     /**
@@ -56,7 +62,38 @@ class ProdukController extends Controller
      */
     public function store(StoreProdukRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'variasi.*.size' => 'required',
+            'variasi.*.warna' => 'required',
+            'variasi.*.harga' => 'required|numeric',
+        ]);
+    
+        $produk = new Produk;
+        $produk->nama_produk = $request->input('nama');
+        // Simpan atribut-atribut lainnya sesuai kebutuhan
+    
+        $produk->save();
+    
+        foreach ($request->input('variasi') as $variasi) {
+            $sizeId = $variasi['size'];
+            $colorId = $variasi['warna'];
+            $stock = $variasi['stock'];
+            $harga = $variasi['harga'];
+    
+            // Simpan variasi produk ke dalam database
+            $produkVariasi = new Harga;
+            $produkVariasi->produk_id = $produk->id;
+            $produkVariasi->size_id = $sizeId;
+            $produkVariasi->warna_id = $colorId;
+            $produkVariasi->stock = $stock;
+            $produkVariasi->harga = $harga;
+            // Simpan atribut variasi lainnya sesuai kebutuhan
+            $produkVariasi->save();
+        }
+    
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
+    
     }
 
     /**
