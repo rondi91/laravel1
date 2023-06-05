@@ -38,6 +38,7 @@ Route::get('/produk/create', [ProdukController::class, 'create'])->name('produk.
 Route::post('/produk', [ProdukController::class, 'store'])->name('produk.store');
 // Route::get('/produk/{produk}', [ProdukController::class, 'show'])->name('produk.show');
 Route::get('/produk/{produk}/edit', [ProdukController::class, 'edit'])->name('produk.edit');
-Route::put('/produk/{produk}', [ProdukController::class, 'update'])->name('produk.update');
+Route::put('/produk/{produk}', [ProdukController::class, 'update'])->name('produk.updates');
 Route::delete('/produk/{produk}', [ProdukController::class, 'destroy'])->name('produk.destroy');
 Route::get('/produk/search', [ProdukController::class, 'search'])->name('produk.search');
+Route::patch('/produk/{id}', [ProdukController::class, 'update'])->name('produk.update');

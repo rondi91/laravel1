@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
      // Relasi dengan model Harga
      public function harga()

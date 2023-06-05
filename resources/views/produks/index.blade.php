@@ -38,15 +38,18 @@
                     @endphp
                 {{-- cobah pindah commit --}}
                 @foreach ($produks as $produk)
+                <div class="produk-item">
                     <tr>
                         <td>{{ $number++ }}</td>
-                        <td>{{ $produk->produk->nama_produk }}</td>
-                        <td>{{ $produk->harga ? $produk->warna->warna : '-' }}</td>
-                        <td>{{ $produk->harga ? $produk->size->size : '-' }}</td>
-                        <td>{{ $produk->harga ? $produk->stock : '-' }}</td>
-                        <td>{{ $produk->harga ? $produk->harga : '-' }}</td> 
+                       <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'nama_produk', this.innerHTML)">{{ $produk->produk->nama_produk }}</td>
+                       {{-- <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'warna', this.innerHTML)">{{ $produk->harga ? $produk->warna->warna : '-' }}</td> --}}
+                       <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'warna_id', this.innerHTML)">{{ $produk->warna->warna }}</td>
+                       <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'size', this.innerHTML)">{{ $produk->harga ? $produk->size->size : '-' }}</td>
+                       <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'stock', this.innerHTML)">{{ $produk->harga ? $produk->stock : '-' }}</td>
+                       <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'harga', this.innerHTML)">{{ $produk->harga ? $produk->harga : '-' }}</td> 
                         <td>
-                            <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-primary edit-btn" data-id="{{ $produk->id }}">Edit</a>
+                            
                             <form action="{{ route('produk.destroy', $produk->id) }}" method="POST" style="display: inline-block">
                                 @csrf
                                 @method('DELETE')
@@ -54,6 +57,7 @@
                             </form>
                         </td>
                     </tr>
+                </div>
                 @endforeach
             </tbody>
         </table>
@@ -63,8 +67,29 @@
         </div>
     </div>
 
+
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
+            function updateProduk(id, field, value) {
+                axios.patch(`/produk/${id}`, {
+                        [field]: value
+                    })
+                    .then(response => {
+                        if (response.status === 200) {
+                            console.log('Produk berhasil diperbarui');
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        </script>
+
+
+        {{-- live search --}}
+        {{-- <script>
             $(document).ready(function() {
                 $('#searchinput').on('keyup', function() {
                     var query = $(this).val();
@@ -82,7 +107,7 @@
                     });
                 });
             });
-            </script>
+            </script> --}}
             
         
 @endsection

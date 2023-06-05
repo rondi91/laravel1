@@ -107,17 +107,32 @@ class ProdukController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Produk $produk)
+    public function edit($id)
     {
-        //
+        $produks = Harga::find($id);
+    // Lakukan validasi dan proses lain yang diperlukan
+
+    return view('produks.edit', compact('produks'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProdukRequest $request, Produk $produk)
+    public function update(Request $request, $id)
     {
-        //
+        $product = Harga::findOrFail($id);
+        if ($request->has('warna_id')) {
+            $warna = Warna::findOrFail($request->warna_id);
+            $product->warna()->associate($warna);
+        }
+
+        $product->update($request->except('warna_id'));
+
+        $product->update($request->all());
+        return response()->json(['message' => 'Produk berhasil diperbarui.']);
+
+        
     }
 
     /**

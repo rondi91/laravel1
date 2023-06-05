@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Warna extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function harga()
     {
