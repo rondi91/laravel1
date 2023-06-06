@@ -24,31 +24,32 @@ class PesanController extends Controller
      */
     public function create()
     {
-        $pembayaran = Pelanggan::all();
-        $produks = Produk::all();
+        $pelanggan = Pelanggan::all();
+        $produk = Produk::all();
 
-        return view('pesans.create', compact('pembayaran', 'produks'));
+        return view('pesans.create', compact('pelanggan', 'produk'));
     }
 
     public function searchPelanggan(Request $request)
     {
         $searchTerm = $request->input('term');
-        $pelanggan = Pelanggan::join('langganans', 'pelanggans.id', '=', 'langganans.pelanggan_id')
-        ->where('pelanggans.Nama_Pelanggan', 'LIKE', "%{$searchTerm}%")
-        ->select('pelanggans.id', 'pelanggans.Nama_Pelanggan', 'langganans.id AS langganan_id')
+        $pelanggan = Pelanggan::where('Nama_Pelanggan', 'LIKE', "%{$searchTerm}%")
+        
+        ->get();
+        $pelanggan = Pelanggan::where('Nama_Pelanggan', 'LIKE', '%' . $searchTerm . '%')
+        ->select('id', 'Nama_Pelanggan')
         ->get();
 
-            $results = [];
-            foreach ($pelanggan as $plg) {
-                $results[] = [
-                    'pelanggan_id' => $plg->id,
-                    'text' => $plg->Nama_Pelanggan,
-                    'id' => $plg->langganan_id
-                ];
-            }
+        $results = [];
+        foreach ($pelanggan as $plg) {
+            $results[] = [
+                'id' => $plg->id,
+                'text' => $plg->Nama_Pelanggan,
+                'ids' => $plg->langganan_id
+            ];
+        }
 
-            return response()->json($results);
-
+        return response()->json($results);
     }
 
     /**

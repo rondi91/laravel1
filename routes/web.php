@@ -46,6 +46,6 @@ Route::patch('/produk/{id}', [ProdukController::class, 'update'])->name('produk.
 
 
 // pesan
-Route::get('/pesan', [PesanController::class, 'create'])->name('pesan.create');
+Route::get('/pesan/create', [PesanController::class, 'create'])->name('pesan.create');
 Route::post('/pesan', [PesanController::class, 'store'])->name('pesan.store');
-Route::get('/pesan/searchPelanggan', [PesanController::class, 'searchPelanggan'])->name('pesan.searchPelanggan');
+Route::get('/pesan/searchPelanggan', [PesanController::class, 'searchPelanggan'])->name('pelanggan.search');
