@@ -11,11 +11,8 @@ class StorePelangganRequest extends FormRequest
      */
     public function authorize(): bool
     {
-<<<<<<< HEAD
-        return false;
-=======
-        return true;
->>>>>>> 3dbebb6
+
+
     }
 
     /**

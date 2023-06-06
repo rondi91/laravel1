@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePesanRequest;
 use App\Http\Requests\UpdatePesanRequest;
+use App\Models\Langganan;
 use App\Models\Pelanggan;
 use App\Models\Pesan;
 use App\Models\Produk;
@@ -24,10 +25,9 @@ class PesanController extends Controller
      */
     public function create()
     {
-        $pembayaran = Pelanggan::all();
-        $produks = Produk::all();
-
-        return view('pesans.create', compact('pembayaran', 'produks'));
+        
+        $langganan = Langganan::latest()->get();
+        return view('pesans.create', compact('langganan'));
     }
 
     public function searchPelanggan(Request $request)
