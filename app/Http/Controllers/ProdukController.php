@@ -23,16 +23,18 @@ class ProdukController extends Controller
         $search = $request->input('search');
 
         if ($search) {
+            $warnas =Warna::all();
             $produks = Harga::whereHas('produk', function ($query) use ($search) {
                 $query->where('nama_produk', 'LIKE', "%{$search}%");
             })->paginate(10);
         } else {
+            $warnas =Warna::all();
             $produks = Harga::with('produk', 'warna','size')->paginate(5);
         }
     
               
         
-        return view('produks.index', compact('produks'));
+        return view('produks.index', compact('produks','warnas'));
     }
     public function search(Request $request)
     {
@@ -122,12 +124,12 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         $product = Harga::findOrFail($id);
-        if ($request->has('warna_id')) {
-            $warna = Warna::findOrFail($request->warna_id);
-            $product->warna()->associate($warna);
-        }
+        // if ($request->has('warna_id')) {
+        //     $warna = Warna::findOrFail($request->warna_id);
+        //     $product->warna()->associate($warna);
+        // }
 
-        $product->update($request->except('warna_id'));
+        // $product->update($request->except('warna_id'));
 
         $product->update($request->all());
         return response()->json(['message' => 'Produk berhasil diperbarui.']);

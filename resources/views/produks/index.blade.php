@@ -42,8 +42,14 @@
                     <tr>
                         <td>{{ $number++ }}</td>
                        <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'nama_produk', this.innerHTML)">{{ $produk->produk->nama_produk }}</td>
-                       {{-- <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'warna', this.innerHTML)">{{ $produk->harga ? $produk->warna->warna : '-' }}</td> --}}
-                       <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'warna_id', this.innerHTML)">{{ $produk->warna->warna }}</td>
+                       <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'warna', this.innerHTML)">{{ $produk->harga ? $produk->warna->warna : '-' }}</td>
+                       {{-- <td>
+                        <select onchange="updateProduk('{{ $produk->id }}', 'warna_id', this.value)">
+                            @foreach($warnas as $warna)
+                                <option value="{{ $warna->id }}" {{ $warna->id == $warna->id ? 'selected' : '' }}>{{ $warna->warna }}</option>
+                            @endforeach
+                        </select>
+                    </td> --}}
                        <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'size', this.innerHTML)">{{ $produk->harga ? $produk->size->size : '-' }}</td>
                        <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'stock', this.innerHTML)">{{ $produk->harga ? $produk->stock : '-' }}</td>
                        <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'harga', this.innerHTML)">{{ $produk->harga ? $produk->harga : '-' }}</td> 
@@ -89,7 +95,7 @@
 
 
         {{-- live search --}}
-        {{-- <script>
+        <script>
             $(document).ready(function() {
                 $('#searchinput').on('keyup', function() {
                     var query = $(this).val();
@@ -107,7 +113,7 @@
                     });
                 });
             });
-            </script> --}}
+            </script>
             
         
 @endsection

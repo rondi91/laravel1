@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
@@ -42,3 +43,9 @@ Route::put('/produk/{produk}', [ProdukController::class, 'update'])->name('produ
 Route::delete('/produk/{produk}', [ProdukController::class, 'destroy'])->name('produk.destroy');
 Route::get('/produk/search', [ProdukController::class, 'search'])->name('produk.search');
 Route::patch('/produk/{id}', [ProdukController::class, 'update'])->name('produk.update');
+
+
+// pesan
+Route::get('/pesan', [PesanController::class, 'create'])->name('pesan.create');
+Route::post('/pesan', [PesanController::class, 'store'])->name('pesan.store');
+Route::get('/pesan/searchPelanggan', [PesanController::class, 'searchPelanggan'])->name('pembayaran.searchPelanggan');

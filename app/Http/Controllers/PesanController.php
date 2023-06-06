@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePesanRequest;
 use App\Http\Requests\UpdatePesanRequest;
+use App\Models\Pelanggan;
 use App\Models\Pesan;
+use App\Models\Produk;
+use Illuminate\Http\Request;
 
 class PesanController extends Controller
 {
@@ -21,7 +24,31 @@ class PesanController extends Controller
      */
     public function create()
     {
-        //
+        $pelanggans = Pelanggan::all();
+        $produks = Produk::all();
+
+        return view('pesans.create', compact('pelanggans', 'produks'));
+    }
+
+    public function searchPelanggan(Request $request)
+    {
+        $searchTerm = $request->input('term');
+        $pelanggan = Pelanggan::join('langganans', 'pelanggans.id', '=', 'langganans.pelanggan_id')
+        ->where('pelanggans.Nama_Pelanggan', 'LIKE', "%{$searchTerm}%")
+        ->select('pelanggans.id', 'pelanggans.Nama_Pelanggan', 'langganans.id AS langganan_id')
+        ->get();
+
+            $results = [];
+            foreach ($pelanggan as $plg) {
+                $results[] = [
+                    'pelanggan_id' => $plg->id,
+                    'text' => $plg->Nama_Pelanggan,
+                    'id' => $plg->langganan_id
+                ];
+            }
+
+            return response()->json($results);
+
     }
 
     /**
