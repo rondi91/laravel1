@@ -13,21 +13,22 @@
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css')}}">
   <!-- endinject -->
   <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+  {{-- <link rel="stylesheet" href="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}"> --}}
   <link rel="stylesheet" href="{{ asset('vendors/ti-icons/css/themify-icons.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('js/select.dataTables.min.css')}}">
+  {{-- <link rel="stylesheet" type="text/css" href="{{ asset('js/select.dataTables.min.css')}}"> --}}
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('css/vertical-layout-light/style.css') }}">
   <!-- endinject -->
         <link rel="shortcut icon" href="{{ asset('images/favicon.png')}}" >
 
-        {{-- select search rondi --}}
+        {{-- membuat select search  --}}
+       
 
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-
+        <!-- Memuat library jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
   <div class="container-scroller">
@@ -71,9 +72,9 @@
   <!-- endinject -->
   <!-- Plugin js for this page -->
   <script src="{{ asset('vendors/chart.js/Chart.min.js')}}"></script>
-  <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js')}}"></script>
-  <script src="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script>
-  <script src="{{ asset('js/dataTables.select.min.js')}}"></script>
+  {{-- <script src="{{ asset('vendors/datatables.net/jquery.dataTables.js')}}"></script> --}}
+  {{-- <script src="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script> --}}
+  {{-- <script src="{{ asset('js/dataTables.select.min.js')}}"></script> --}}
 
   <!-- End plugin js for this page -->
   <!-- inject:js -->
@@ -82,10 +83,10 @@
   <script src="{{ asset('js/template.js')}}"></script>
   <script src="{{ asset('js/settings.js')}}"></script>
   <script src="{{ asset('js/todolist.js')}}"></script>
-  <!-- endinject -->
+  {{-- <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="{{ asset('js/dashboard.js')}}"></script>
-  <script src="{{ asset('js/Chart.roundedBarCharts.js')}}"></script>
+  <script src="{{ asset('js/Chart.roundedBarCharts.js')}}"></script> --}}
   <!-- End custom js for this page-->
 </body>
 

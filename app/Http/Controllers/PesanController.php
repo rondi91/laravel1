@@ -24,10 +24,10 @@ class PesanController extends Controller
      */
     public function create()
     {
-        $pelanggans = Pelanggan::all();
+        $pembayaran = Pelanggan::all();
         $produks = Produk::all();
 
-        return view('pesans.create', compact('pelanggans', 'produks'));
+        return view('pesans.create', compact('pembayaran', 'produks'));
     }
 
     public function searchPelanggan(Request $request)
