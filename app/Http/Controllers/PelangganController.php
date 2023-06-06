@@ -5,23 +5,51 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePelangganRequest;
 use App\Http\Requests\UpdatePelangganRequest;
 use App\Models\Pelanggan;
+use Illuminate\Http\Request;
 
 class PelangganController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+
+        if ($search) {
+            $pelanggans = Pelanggan::where('Nama_Pelanggan', 'like', '%' . $search . '%')
+                ->orWhere('Alamat_Pelanggan', 'like', '%' . $search . '%')
+                ->orWhere('Nomor_Telepon', 'like', '%' . $search . '%')
+                ->get();
+        } else {
+            $pelanggans = Pelanggan::latest()->paginate(5)->withQueryString();
+        }
+    
+        return view('pelanggan.index', compact('pelanggans'));
+        // $pelanggan = Pelanggan::latest()->get();
+        // return view('pelanggan.index',['pelanggans'=>$pelanggan]);
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $pelanggans = Pelanggan::where('Nama_Pelanggan', 'LIKE', "%{$search}%")
+            ->orWhere('Alamat_Pelanggan', 'LIKE', "%{$search}%")
+            ->orWhere('Nomor_Telepon', 'LIKE', "%{$search}%")
+            ->paginate(10);
+
+        return view('pelanggan.partial_table', compact('pelanggans'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -29,7 +57,10 @@ class PelangganController extends Controller
      */
     public function store(StorePelangganRequest $request)
     {
-        //
+
+        Pelanggan::create($request->all());
+        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan created successfully');
+
     }
 
     /**
@@ -45,7 +76,11 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        //
+
+        // $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan = $pelanggan;
+        return view('pelanggan.edit', compact('pelanggan'));
+
     }
 
     /**
@@ -53,7 +88,14 @@ class PelangganController extends Controller
      */
     public function update(UpdatePelangganRequest $request, Pelanggan $pelanggan)
     {
-        //
+
+        // dd(__FILE__,__LINE__,$request);
+        // $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan = $pelanggan;
+        $pelanggan->update($request->all());
+        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan updated successfully');
+    
+
     }
 
     /**
@@ -61,6 +103,12 @@ class PelangganController extends Controller
      */
     public function destroy(Pelanggan $pelanggan)
     {
-        //
+
+        // $pelanggan = Pelanggan::findOrFail($id); 
+        $pelanggan->delete();
+        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan deleted successfully');
     }
+
+
+
 }

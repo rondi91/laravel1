@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Pembayaran extends Model
 {
     use HasFactory;
+
+
+    protected $guarded= [];
+
+
+	public function langganan()
+    {
+        return $this->belongsTo(Langganan::class);
+    }
+
+
+
 }

@@ -4,16 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
+
+
+use App\Models\Langganan;
+use App\Models\Pelanggan;
 use App\Models\Pembayaran;
+use Illuminate\Http\Request;
+
 
 class PembayaranController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+  
+
+    public function index(Request $request)
     {
-        //
+        $search = $request->input('search');
+
+        if ($search) {
+            $pembayaran = Pembayaran::where('langganan_id', 'like', '%' . $search . '%')
+                ->paginate(5)->withQueryString();
+        } else {
+            $pembayaran = Pembayaran::latest()->paginate(5)->withQueryString();
+        }
+    
+        return view('pembayaran.index', compact('pembayaran'));
+        // $pelanggan = Pelanggan::latest()->get();
+        // return view('pelanggan.index',['pembayaran'=>$pelanggan]);
+    }
+
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $pembayaran = Pembayaran::whereHas('langganan.pelanggan', function ($query) use ($search) {
+            $query->where('Nama_Pelanggan', 'LIKE', "%{$search}%");
+        })->paginate(10);
+
+        return view('pembayaran.partial_table', compact('pembayaran'));
     }
 
     /**
@@ -21,7 +52,10 @@ class PembayaranController extends Controller
      */
     public function create()
     {
-        //
+
+        $langganan = Langganan::latest()->get();
+        return view('pembayaran.form', compact('langganan'));
+
     }
 
     /**
@@ -29,38 +63,82 @@ class PembayaranController extends Controller
      */
     public function store(StorePembayaranRequest $request)
     {
-        //
+
+        Pembayaran::create($request->all());
+        return redirect()->route('pembayaran.index')->with('success', 'Pembayaran created successfully');
+   
+
     }
 
     /**
      * Display the specified resource.
      */
+
     public function show(Pembayaran $pembayaran)
     {
         //
+    }
+    public function detail($id)
+    {
+        $pembayaran = Pembayaran::findOrFail($id);
+        return view('pembayaran.detail', compact('pembayaran'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pembayaran $pembayaran)
+
+    public function edit( $id)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+        $langganan = Langganan::all();
+        return view('pembayaran.form', compact('pembayaran', 'langganan'));
+    
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
+  
+    // public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
+    public function update($id)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran->update(request()->all());
+        return redirect()->route('pembayaran.index')->with('success', 'Pembayaran updated successfully');
+    
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pembayaran $pembayaran)
+
+    public function destroy($id)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran->delete();
+        return redirect()->route('pembayaran.index')->with('success', 'Pembayaran deleted successfully');
     }
+
+    public function searchPelanggan(Request $request)
+    {
+        $searchTerm = $request->input('term');
+        $pelanggan = Pelanggan::join('langganans', 'pelanggans.id', '=', 'langganans.pelanggan_id')
+        ->where('pelanggans.Nama_Pelanggan', 'LIKE', "%{$searchTerm}%")
+        ->select('pelanggans.id', 'pelanggans.Nama_Pelanggan', 'langganans.id AS langganan_id')
+        ->get();
+
+            $results = [];
+            foreach ($pelanggan as $plg) {
+                $results[] = [
+                    'pelanggan_id' => $plg->id,
+                    'text' => $plg->Nama_Pelanggan,
+                    'id' => $plg->langganan_id
+                ];
+            }
+
+            return response()->json($results);
+
+    }
+
 }

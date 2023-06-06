@@ -9,8 +9,18 @@ class Pelanggan extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+
     public function pesanan()
     {
         return $this->hasMany(Pesanan::class);
+
+    }
+
+    public function langganan()
+    {
+        return $this->hasMany(Langganan::class);
+
     }
 }
