@@ -18,13 +18,14 @@ return new class extends Migration
             $table->foreignId('produk_id')->constrained()->onDelete('cascade');
             $table->foreignId('warna_id')->constrained()->onDelete('cascade');
             $table->foreignId('size_id')->constrained()->onDelete('cascade');
-            
+            $table->integer('jumlah');
+            $table->decimal('unit_price', 8, 2);
             
             // $table->unsignedBigInteger('pesan_id');
             // $table->unsignedBigInteger('produk_id');
             // $table->unsignedBigInteger('warna_id');
             // $table->unsignedBigInteger('size_id');
-            $table->integer('jumlah');
+            
             $table->timestamps();
             
             

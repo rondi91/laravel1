@@ -28,6 +28,7 @@ class DetailPesananFactory extends Factory
             'warna_id' => Warna::factory()->create()->id,
             'size_id' => Size::factory()->create()->id,
             'jumlah' => $this->faker->numberBetween(1, 5),
+            'unit_price' => $this->faker->randomFloat(2, 10, 100),
         ];
     }
 }

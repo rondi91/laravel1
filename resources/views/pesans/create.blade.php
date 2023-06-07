@@ -11,7 +11,7 @@
 
                 <div class="form-group">
                     <label for="pelanggan">Pelanggan:</label>
-                    <select class="pelanggan-search form-control " name="pelanggan_id" id="pelanggan"></select>
+                    <select class="pelanggan-search form-control " name="pelanggan_id" id="pelanggan" placeholder= "Pilih pelanggan"></select>
                    
                 </div>
 {{-- 
@@ -44,7 +44,7 @@
                       </select>
                 
                       <label for="jumlah">Jumlah:</label>
-                      <input type="text" name="jumlah[]" class="jumlah-input">
+                      <input type="text" name="jumlah[]" class="jumlah-input" >
                     </div>
                   </div>
                 
@@ -60,7 +60,7 @@
         <script>
             $(document).ready(function() {
                 $('.pelanggan-search').select2({
-                    placeholder: 'Pilih pelanggan',
+                    
                     ajax: {
                         url: '{{ route("pelanggan.search") }}',
                         dataType: 'json',
@@ -77,11 +77,9 @@
         
                
             });
-        </script>
-
-            <script>
+        
                 function tambahPesan() {
-                console.log('ok');
+                // console.log('ok');
                 var pesanGroup = document.createElement('div');
                 pesanGroup.className = 'pesan-group';
             

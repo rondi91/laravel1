@@ -12,7 +12,7 @@
                 <th>ID</th>
                 <th>Pelanggan</th>
                 {{-- <th>Produk</th> --}}
-                <th>Jumlah</th>
+                <th>status</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -22,7 +22,7 @@
                     <td>{{ $psn->id }}</td>
                     <td>{{ $psn->pelanggan->nama_pelanggan }}</td>
                     {{-- <td>{{ $psn->produk->nama_produk}}</td> --}}
-                    <td>{{ $psn->jumlah }}</td>
+                    <td>{{ $psn->status }}</td>
                     <td>
                         <a href="{{ route('pesan.edit', $psn->id) }}" class="btn btn-sm btn-primary">Edit</a>
                         <form action="{{ route('pesan.destroy', $psn->id) }}" method="POST" class="d-inline">

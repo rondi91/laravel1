@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pesan_id')->constrained()->onDelete('cascade');
             $table->foreignId('pelanggan_id')->constrained()->onDelete('cascade');
-            $table->foreignId('produk_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity');
-            $table->decimal('unit_price', 8, 2);
             $table->decimal('total_price', 8, 2);
             $table->string('payment_method');
             $table->string('payment_status');
