@@ -46,6 +46,9 @@ Route::patch('/produk/{id}', [ProdukController::class, 'update'])->name('produk.
 
 
 // pesan
+Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');
 Route::get('/pesan/create', [PesanController::class, 'create'])->name('pesan.create');
+Route::get('/pesan/{pesan}/edit', [PesanController::class, 'edit'])->name('pesan.edit');
 Route::post('/pesan', [PesanController::class, 'store'])->name('pesan.store');
 Route::get('/pesan/searchPelanggan', [PesanController::class, 'searchPelanggan'])->name('pelanggan.search');
+Route::delete('/pesan{pesan}', [PesanController::class, 'destroy'])->name('pesan.destroy');

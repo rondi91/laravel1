@@ -13,6 +13,7 @@ class Pesan extends Model
     {
         return $this->belongsTo(Pelanggan::class);
     }
+    
 
     public function transaksi()
     {

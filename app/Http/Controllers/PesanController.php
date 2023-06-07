@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePesanRequest;
 use App\Http\Requests\UpdatePesanRequest;
+use App\Models\DetailPesanan;
 use App\Models\Pelanggan;
 use App\Models\Pesan;
 use App\Models\Produk;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PesanController extends Controller
@@ -16,7 +18,9 @@ class PesanController extends Controller
      */
     public function index()
     {
-        //
+       $pesanan = Pesan::with('pelanggan')->get();
+       return view('pesans.index',compact('pesanan'));
+
     }
 
     /**
@@ -57,7 +61,44 @@ class PesanController extends Controller
      */
     public function store(StorePesanRequest $request)
     {
-        //
+    //    return $request;
+        $request->validate([
+            'pelanggan_id' => 'required',
+            'produk' => 'array',
+            'jumlah' => 'array',
+
+
+            // 'langganan_id' => 'required',
+            // 'tanggal_pesan' => 'required',
+            // 'produk' => 'required',
+            // 'jumlah' => 'required|numeric',
+        ]);
+        
+
+        $pesan = new Pesan();
+        $pesan->pelanggan_id = $request->pelanggan_id;
+        $pesan->tanggal = Carbon::now();
+        // $pesan->produk_id = $request->produk;
+        // $pesan->jumlah = $request->jumlah;
+        $pesan->save();
+
+        // Memasukkan data detail pesanan
+        if ($request->has('produk')) {
+            foreach ($request->input('produk') as $key => $produkId) {
+                if (!empty($produkId)) {
+                    $detailPesanan = new DetailPesanan();
+                    $detailPesanan->pesan_id = $pesan->id;
+                    $detailPesanan->produk_id = $produkId;
+                    $detailPesanan->warna_id = 1;
+                    $detailPesanan->size_id = 2;
+                    $detailPesanan->jumlah = $request->input('jumlah')[$key];
+                    $detailPesanan->save();
+                }
+            }
+        }
+
+        return redirect()->route('pesan.index')->with('success', 'Pesanan berhasil ditambahkan');
+    
     }
 
     /**

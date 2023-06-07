@@ -11,7 +11,7 @@
 
                 <div class="form-group">
                     <label for="pelanggan">Pelanggan:</label>
-                    <select class="pelanggan-search form-control " name="langganan_id"></select>
+                    <select class="pelanggan-search form-control " name="pelanggan_id" id="pelanggan"></select>
                    
                 </div>
 {{-- 
@@ -24,22 +24,35 @@
                     </select>
                 </div> --}}
 
-                <div class="form-group">
-                    <label for="produk">Produk:</label>
-                    <select class="form-control" id="produk" name="produk" required>
-                        @foreach ($produk as $p)
-                            <option value="{{ $p->id }}">{{ $p->nama_produk }}</option>
+                    {{-- <div class="form-group">
+                        <label for="produk">Produk:</label>
+                        <select class="form-control" id="produk" name="produk" required>
+                            @foreach ($produk as $p)
+                                <option value="{{ $p->id }}">{{ $p->nama_produk }}</option>
+                            @endforeach
+                        </select>
+                    </div> --}}
+
+                <div id="pesan-container">
+                    <div class="pesan-group">
+                      <label for="produk">Produk:</label>
+                      <select name="produk[]" class="produk-select">
+                        <option value="">Pilih Produk</option>
+                        @foreach($produk as $p)
+                          <option value="{{ $p->id }}">{{ $p->nama_produk }}</option>
                         @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="jumlah">Jumlah:</label>
-                    <input type="number" class="form-control" id="jumlah" name="jumlah" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Tambah</button>
-            </form>
+                      </select>
+                
+                      <label for="jumlah">Jumlah:</label>
+                      <input type="text" name="jumlah[]" class="jumlah-input">
+                    </div>
+                  </div>
+                
+                  <button type="button" onclick="tambahPesan()">Tambah Pesan</button>
+                  <button type="submit">Simpan</button>
+                </form>
+                
+               
         </div>
     </div>
 </div>
@@ -65,5 +78,46 @@
                
             });
         </script>
+
+            <script>
+                function tambahPesan() {
+                console.log('ok');
+                var pesanGroup = document.createElement('div');
+                pesanGroup.className = 'pesan-group';
+            
+                var produkLabel = document.createElement('label');
+                produkLabel.textContent = 'Produk:';
+                var produkSelect = document.createElement('select');
+                produkSelect.name = 'produk[]';
+                produkSelect.className = 'produk-select';
+            
+                var defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Pilih Produk';
+                produkSelect.appendChild(defaultOption);
+            
+                @foreach($produk as $p)
+                    var option = document.createElement('option');
+                    option.value = '{{ $p->id }}';
+                    option.textContent = '{{ $p->nama_produk }}';
+                    produkSelect.appendChild(option);
+                @endforeach
+            
+                var jumlahLabel = document.createElement('label');
+                jumlahLabel.textContent = 'Jumlah:';
+                var jumlahInput = document.createElement('input');
+                jumlahInput.type = 'text';
+                jumlahInput.name = 'jumlah[]';
+                jumlahInput.className = 'jumlah-input';
+            
+                pesanGroup.appendChild(produkLabel);
+                pesanGroup.appendChild(produkSelect);
+                pesanGroup.appendChild(jumlahLabel);
+                pesanGroup.appendChild(jumlahInput);
+            
+                var container = document.getElementById('pesan-container');
+                container.appendChild(pesanGroup);
+                }
+            </script>
     
 @endsection

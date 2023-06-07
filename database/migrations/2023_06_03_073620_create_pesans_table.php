@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pelanggan_id');
             $table->date('tanggal');
-            $table->string('status');
+            $table->string('status')->default('prosses');
             $table->timestamps();
 
             $table->foreign('pelanggan_id')->references('id')->on('pelanggans')->onDelete('cascade');
