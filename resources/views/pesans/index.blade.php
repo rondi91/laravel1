@@ -6,6 +6,17 @@
 
     <a href="{{ route('pesan.create') }}" class="btn btn-primary mb-3">Tambah Pesanan</a>
 
+
+    <div class="filter">
+        <label for="status">Filter Status:</label>
+        <select name="status" id="status" onchange="filterPesan(this.value)">
+            <option value="">Semua</option>
+            <option value="belum diproses" {{ request('status') == 'belum diproses' ? 'selected' : '' }}>Belum Diproses</option>
+            <option value="dalam pengiriman" {{ request('status') == 'dalam pengiriman' ? 'selected' : '' }}>Dalam Pengiriman</option>
+            <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+        </select>
+    </div>  
+
     <table class="table">
         <thead>
             <tr>
@@ -37,4 +48,11 @@
         </tbody>
     </table>
 </div>
+
 @endsection
+@section('scripts')
+    <script>
+        function filterPesan(status) {
+            window.location.href = "{{ route('pesan.index') }}?status=" + status;
+        }
+    </script>

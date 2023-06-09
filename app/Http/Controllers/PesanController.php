@@ -16,10 +16,18 @@ class PesanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $status = $request->query('status');
+
+        // Mengambil data pesan berdasarkan status
+        $pesanan = Pesan::when($status, function ($query, $status) {
+            return $query->where('status', $status);
+        })
+        ->with('pelanggan')
+        ->get();
         
-       $pesanan = Pesan::with('pelanggan')->get();
+    //    $pesanan = Pesan::with('pelanggan')->get();
        return view('pesans.index',compact('pesanan'));
 
     }
