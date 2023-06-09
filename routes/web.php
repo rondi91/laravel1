@@ -3,6 +3,8 @@
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\TransactionsController;
+use App\Models\Transactions;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +51,18 @@ Route::patch('/produk/{id}', [ProdukController::class, 'update'])->name('produk.
 Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');
 Route::get('/pesan/create', [PesanController::class, 'create'])->name('pesan.create');
 Route::get('/pesan/{pesan}/edit', [PesanController::class, 'edit'])->name('pesan.edit');
+Route::get('/ßesan/{pesan}', [PesanController::class, 'show'])->name('pesan.show');
 Route::post('/pesan', [PesanController::class, 'store'])->name('pesan.store');
 Route::get('/pesan/searchPelanggan', [PesanController::class, 'searchPelanggan'])->name('pelanggan.search');
 Route::delete('/pesan{pesan}', [PesanController::class, 'destroy'])->name('pesan.destroy');
+
+Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
+Route::get('/transactions/{id}', [TransactionsController::class, 'show'])->name('transactions.show');
+// Route::get('/transactions/create{id}', [TransactionsController::class, 'create'])->name('transactions.create');
+Route::get('/transactions/create/{pesanan_id}', [TransactionsController::class, 'create'])->name('transactions.create');
+Route::post('/transactions', [TransactionsController::class, 'store'])->name('transactions.store');
+Route::get('/transactions/{id}/edit', [TransactionsController::class, 'edit'])->name('transactions.edit');
+Route::put('/transactions/{id}', [TransactionsController::class, 'update'])->name('transactions.update');
+Route::delete('/transactions/{id}', [TransactionsController::class, 'destroy'])->name('transactions.destroy');
+
+Route::post('/pembayaran', 'PembayaranController@store')->name('pembayaran.store');

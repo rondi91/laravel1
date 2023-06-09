@@ -10,9 +10,9 @@ class DetailPesanan extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function pesanan()
+    public function pesan()
     {
-        return $this->belongsTo(Pesanan::class);
+        return $this->belongsTo(Pesan::class);
     }
 
     public function produk()

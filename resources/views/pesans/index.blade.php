@@ -24,6 +24,7 @@
                     {{-- <td>{{ $psn->produk->nama_produk}}</td> --}}
                     <td>{{ $psn->status }}</td>
                     <td>
+                        <a href="{{ route('pesan.show', $psn->id) }}" class="btn btn-sm btn-warning">show</a>
                         <a href="{{ route('pesan.edit', $psn->id) }}" class="btn btn-sm btn-primary">Edit</a>
                         <form action="{{ route('pesan.destroy', $psn->id) }}" method="POST" class="d-inline">
                             @csrf

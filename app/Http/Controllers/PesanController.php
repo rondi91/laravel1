@@ -18,6 +18,7 @@ class PesanController extends Controller
      */
     public function index()
     {
+        
        $pesanan = Pesan::with('pelanggan')->get();
        return view('pesans.index',compact('pesanan'));
 
@@ -28,6 +29,7 @@ class PesanController extends Controller
      */
     public function create()
     {
+        // return 'ok';
         $pelanggan = Pelanggan::all();
         $produk = Produk::all();
 
@@ -92,6 +94,8 @@ class PesanController extends Controller
                     $detailPesanan->warna_id = 1;
                     $detailPesanan->size_id = 2;
                     $detailPesanan->jumlah = $request->input('jumlah')[$key];
+                    $detailPesanan->unit_price = 20000;
+                    
                     $detailPesanan->save();
                 }
             }
@@ -104,9 +108,11 @@ class PesanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pesan $pesan)
+    public function show($id)
     {
-        //
+        $pesan = Pesan::findOrFail($id);
+
+        return view('pesans.show', compact('pesan'));
     }
 
     /**

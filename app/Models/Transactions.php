@@ -13,4 +13,11 @@ class Transactions extends Model
     {
         return $this->belongsTo(Pesanan::class);
     }
+
+
+    public function pelanggan()
+    {
+        // 1 transaction punya 1 pelanggan 
+        return $this->belongsTo(Pelanggan::class);
+    }
 }
