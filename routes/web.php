@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboardcontroller;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProdukController;
@@ -18,10 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/dashboard', function () {
     return view('admin.dashboard');
 });
 
+
+Route::get('/', [Dashboardcontroller::class, 'index'])->name('dashboard.index');
 
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

@@ -4,7 +4,6 @@
 <div class="container">
     
     <h1>Daftar Transaksi</h1>
-
 <div class="table-responsive pt-3">
     <table class="table table-bordered">
       <thead>

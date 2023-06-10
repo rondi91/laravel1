@@ -2,22 +2,29 @@
 
 @section('content')
     <div class="container">
-    <h1>Daftar Pesanan</h1>
+    <h1>Daftar Pesan</h1>
 
     <a href="{{ route('pesan.create') }}" class="btn btn-primary mb-3">Tambah Pesanan</a>
 
 
-    <div class="filter">
-        <label for="status">Filter Status:</label>
-        <select name="status" id="status" onchange="filterPesan(this.value)">
-            <option value="">Semua</option>
-            <option value="belum diproses" {{ request('status') == 'belum diproses' ? 'selected' : '' }}>Belum Diproses</option>
-            <option value="dalam pengiriman" {{ request('status') == 'dalam pengiriman' ? 'selected' : '' }}>Dalam Pengiriman</option>
-            <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
-        </select>
-    </div>  
+    <div class="tabs center">
+        <ul class="nav nav-tabs ">
+            <li class="nav-item">
+                <a class="nav-link {{ request('status') == '' ? 'active' : '' }}" href="{{ route('pesan.index') }}">Semua</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request('status') == 'belum diproses' ? 'active' : '' }}" href="{{ route('pesan.index', ['status' => 'belum diproses']) }}">Belum Diproses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request('status') == 'dalam pengiriman' ? 'active' : '' }}" href="{{ route('pesan.index', ['status' => 'dalam pengiriman']) }}">Dalam Pengiriman</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request('status') == 'selesai' ? 'active' : '' }}" href="{{ route('pesan.index', ['status' => 'selesai']) }}">Selesai</a>
+            </li>
+        </ul>
+    </div>
 
-    <table class="table">
+     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -28,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($pesanan as $psn)
+            @foreach ($pesan as $psn)
                 <tr>
                     <td>{{ $psn->id }}</td>
                     <td>{{ $psn->pelanggan->nama_pelanggan }}</td>

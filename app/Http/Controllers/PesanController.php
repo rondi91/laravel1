@@ -21,14 +21,14 @@ class PesanController extends Controller
         $status = $request->query('status');
 
         // Mengambil data pesan berdasarkan status
-        $pesanan = Pesan::when($status, function ($query, $status) {
+        $pesan = Pesan::when($status, function ($query, $status) {
             return $query->where('status', $status);
         })
         ->with('pelanggan')
         ->get();
         
     //    $pesanan = Pesan::with('pelanggan')->get();
-       return view('pesans.index',compact('pesanan'));
+       return view('pesans.index',compact('pesan'));
 
     }
 
