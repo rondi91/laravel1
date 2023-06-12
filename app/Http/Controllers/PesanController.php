@@ -25,7 +25,7 @@ class PesanController extends Controller
             return $query->where('status', $status);
         })
         ->with('pelanggan')
-        ->get();
+        ->latest()->get();
         
     //    $pesanan = Pesan::with('pelanggan')->get();
        return view('pesans.index',compact('pesan'));

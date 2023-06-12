@@ -57,8 +57,13 @@
         </table>
     </div>
     <h3> Total bayar : {{ $totalKeseluruhan }}</h3>
-
-    <a href="{{ route('transactions.create', ['pesanan_id' => $pesan->id]) }}" class="btn btn-primary">Bayar</a>
+    {{-- {{ dd(__FILE__,__LINE__,$pesan->id); }} --}}
+    {{-- {{ dd(__FILE__,__LINE__,$pesan->transaksi->pesan_id); }} --}}
+    @if ($pesan->id == $pesan->transaksi()->exists())
+        <p>Pesanan sudah dibayar.</p>
+    @else
+        <a href="{{ route('transactions.create', ['pesanan_id' => $pesan->id]) }}" class="btn btn-primary">Bayar</a>
+    @endif
     
 </div>
 @endsection

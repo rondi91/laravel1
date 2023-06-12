@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create(); 
         // Pelanggan::factory(10)->create(); 
-        Produk::factory(10)->create(); 
+        Produk::factory(100)->create(); 
         Warna::factory(3)->create(); 
         Size::factory(4)->create(); 
-        Pesan::factory(3)->create(); 
-        DetailPesanan::factory(3)->create(); 
-        Harga::factory(10)->create(); 
-        Transactions::factory(10)->create(); 
+        Pesan::factory(100)->create(); 
+        DetailPesanan::factory(200)->create(); 
+        Harga::factory(100)->create(); 
+        Transactions::factory(200)->create(); 
         
         // Post::factory(10)->create();
         // memanggil postseeder

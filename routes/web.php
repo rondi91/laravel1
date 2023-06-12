@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
 
 
 Route::get('/', [Dashboardcontroller::class, 'index'])->name('dashboard.index');
-
+Route::get('/dashboard/transactions-daily', [DashboardController::class, 'getDailyTransactions'])->name('dashboard.transactions.daily');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');

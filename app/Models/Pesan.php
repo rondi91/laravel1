@@ -17,7 +17,7 @@ class Pesan extends Model
 
     public function transaksi()
     {
-        return $this->hasOne(Transaksi::class);
+        return $this->hasOne(Transactions::class);
     }
 
     public function detailPesanan()

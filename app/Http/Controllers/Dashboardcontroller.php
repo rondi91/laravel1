@@ -28,21 +28,24 @@ class Dashboardcontroller extends Controller
         $totalProduk = Produk::count();
         $totalPelanggan = Pelanggan::count();
 
-        // Mendapatkan data transaksi per bulan dari database
-        $transactionData = Transactions::selectRaw('MONTH(created_at) as month, SUM(total_price) as total')
-        ->groupBy('month')
+        $transactionData = Transactions::selectRaw('YEAR(transaction_date) as year, MONTH(transaction_date) as month, SUM(total_price) as total')
+        ->groupBy('year', 'month')
         ->get();
+        // return $transactionData;
+    // Menginisialisasi array untuk menyimpan data tahun
+    $years = [];
 
-        // Menginisialisasi array untuk menyimpan data bulan dan total transaksi
-        $months = [];
-        $transactionTotals = [];
-
-        // Iterasi data transaksi per bulan
-        foreach ($transactionData as $data) {
-        $month = Carbon::createFromFormat('m', $data->month)->format('F');
-        $months[] = $month;
-        $transactionTotals[] = $data->total;
+    // Iterasi data transaksi per bulan untuk mendapatkan tahun
+    foreach ($transactionData as $data) {
+        $year = $data->year;
+        if (!in_array($year, $years)) {
+            $years[] = $year;
         }
+    }
+
+    // area chart daily transaction 
+
+   
 
         return view('dashboard.index', compact(
             'totalOrder',
@@ -56,8 +59,19 @@ class Dashboardcontroller extends Controller
             'pendapatanTahunIni',
             'totalProduk',
             'totalPelanggan',
-            'transactionTotals',
+            'years',
             'transactionData'
         ));
+    }
+
+    public function getDailyTransactions(Request $request)
+    {
+        $transactions = Transactions::selectRaw('DATE(transaction_date) AS date, COUNT(*) AS total')
+            ->whereDate('transaction_date', '>=', Carbon::now()->subDays(30))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        return response()->json($transactions);
     }
 }

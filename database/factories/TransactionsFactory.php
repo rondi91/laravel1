@@ -22,7 +22,7 @@ class TransactionsFactory extends Factory
         return [
             'pesan_id' => Pesan::factory()->create()->id,
             'pelanggan_id' => Pelanggan::factory()->create()->id,
-            'total_price' => $this->faker->randomFloat(2, 50, 500),
+            'total_price' => $this->faker->randomFloat(2, 150000, 500000),
             'payment_method' => $this->faker->randomElement(['Kartu Kredit', 'Transfer Bank', 'Dompet Digital']),
             'payment_status' => $this->faker->randomElement(['Lunas', 'Menunggu Pembayaran']),
             'transaction_date' => $this->faker->date()
