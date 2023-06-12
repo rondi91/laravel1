@@ -66,7 +66,7 @@ class Dashboardcontroller extends Controller
 
     public function getDailyTransactions(Request $request)
     {
-        $transactions = Transactions::selectRaw('DATE(transaction_date) AS date, COUNT(*) AS total')
+        $transactions = Transactions::selectRaw('DATE(transaction_date) AS date, SUM(total_price) AS total')
             ->whereDate('transaction_date', '>=', Carbon::now()->subDays(30))
             ->groupBy('date')
             ->orderBy('date')

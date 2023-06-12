@@ -135,8 +135,8 @@
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Ambil data transaksi dari server
         var transactionData = {!! json_encode($transactionData) !!};
@@ -192,38 +192,38 @@
 
     {{-- script area chart  --}}
 
-<script>
-    // Mengambil data transaksi harian dari server
-    fetch("{{ route('dashboard.transactions.daily') }}")
-        .then(response => response.json())
-        .then(data => {
-            // Mengubah format data menjadi array tanggal dan total transaksi
-            const dates = data.map(item => item.date);
-            const totals = data.map(item => item.total);
-            console.log(totals  );
-
-            // Membuat chart
-            const ctx = document.getElementById('dailyTransactionsChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dates,
-                    datasets: [{
-                        label: 'Transaksi Harian',
-                        data: totals,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+    <script>
+        // Mengambil data transaksi harian dari server
+        fetch("{{ route('dashboard.transactions.daily') }}")
+            .then(response => response.json())
+            .then(data => {
+                // Mengubah format data menjadi array tanggal dan total harga
+                const dates = data.map(item => item.date);
+                const totals = data.map(item => item.total);
+    
+                // Membuat chart
+                const ctx = document.getElementById('dailyTransactionsChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: 'Total Harga Harian',
+                            data: totals,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
+                });
             });
-        });
-</script>
+    </script>
+    
 @endsection
