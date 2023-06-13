@@ -57,7 +57,8 @@
             {{ $transaction->payment_status }}
           </td>
           <td>
-            <button class="btn btn-primary" onclick="showDialog('{{ $transaction->id }}')">Edit</button>
+            <button class="btn btn-primary"  onclick="showEditDialog('{{ $transaction->id }}')">Edit</button>
+           
           </td>
         </tr>
         @endforeach
@@ -65,49 +66,91 @@
     </table>
   </div>
 </div>
-
-<!-- Dialog box untuk mengedit transaksi -->
-<div class="modal" id="editDialog">
-  <div class="modal-dialog">
+<!-- Dialog Box Edit -->
+<div id="editDialog" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h3 class="modal-title">Edit Transaksi</h3>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h5 class="modal-title">Edit Transaksi</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
           </div>
           <div class="modal-body">
-              <form id="editTransaksiForm" action="{{ route('transaksi.update', $transaksi->id) }}" method="POST">
+              <form id="editForm" action="{{ route('transactions.update', $transaction->id) }}" method="POST">
                   @csrf
                   @method('PUT')
+
                   <div class="form-group">
-                      <label for="nama">Nama Transaksi:</label>
-                      <input type="text" class="form-control" name="nama" id="nama" value="{{ $transaksi->nama_transaksi }}">
+                      <label for="nama_pelanggan">Nama Pelanggan</label>
+                      <input type="hidden" class="form-control" id="transaction_id" name="transaction_id" >
+                      <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan" required readonly>
                   </div>
+
                   <div class="form-group">
-                      <label for="tanggal">Tanggal:</label>
-                      <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ $transaksi->tanggal }}">
+                      <label for="tanggal_transaksi">Tanggal Transaksi</label>
+                      <input type="date" class="form-control" id="tanggal_transaksi" name="tanggal_transaksi" required readonly>
                   </div>
+
                   <div class="form-group">
-                      <label for="jumlah">Jumlah:</label>
-                      <input type="number" class="form-control" name="jumlah" id="jumlah" value="{{ $transaksi->jumlah }}">
+                      <label for="total_harga">Total Harga</label>
+                      <input type="number" class="form-control" id="total_harga" name="total_harga" required readonly>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="metode_pembayaran">Metode Pembayaran</label>
+                      <select class="form-control" id="metode_pembayaran" name="metode_pembayaran" required>
+                          <option value="cash">Cash</option>
+                          <option value="credit">Credit</option>
+                      </select>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="status_pembayaran">Status Pembayaran</label>
+                      <select class="form-control" id="status_pembayaran" name="status_pembayaran" required>
+                          <option value="paid">Paid</option>
+                          <option value="unpaid">Unpaid</option>
+                          
+                      </select>
+                  </div>
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
                   </div>
               </form>
-          </div>
-          <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" form="editTransaksiForm">Simpan</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
           </div>
       </div>
   </div>
 </div>
 
 <script>
-  function showDialog(transaksiId) {
-      // Set nilai transaksiId pada input tersembunyi di dalam form
-      document.getElementById('transaksiId').value = transaksiId;
-      
-      // Munculkan dialog box
-      $('#editDialog').modal('show');
+  function showEditDialog(transaksiId) {
+    console.log(transaksiId);
+      // Ambil data transaksi berdasarkan ID dari server
+      $.ajax({
+          url: '/transactions/' + transaksiId,
+          type: 'GET',
+          success: function(respon) {
+          
+            console.log(respon);
+              // Isi nilai input dengan data transaksi yang diterima
+              $('#transaction_id').val(respon.id);
+              $('#nama_pelanggan').val(respon.nama_pelanggan);
+              $('#tanggal_transaksi').val(respon.transaction_date);
+              $('#total_harga').val(respon.total_price);  
+              $('#metode_pembayaran').val(respon.payment_method);
+              $('#status_pembayaran').val(respon.payment_status);
+              
+
+
+              // Tampilkan dialog box edit
+              $('#editDialog').modal('show');
+          },
+          error: function(xhr) {
+              console.log(xhr.responseText);
+          }
+      });
   }
 </script>
-
 @endsection
