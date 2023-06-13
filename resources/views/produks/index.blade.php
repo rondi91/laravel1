@@ -54,6 +54,8 @@
                        <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'stock', this.innerHTML)">{{ $produk->harga ? $produk->stock : '-' }}</td>
                        <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'harga', this.innerHTML)">{{ $produk->harga ? $produk->harga : '-' }}</td> 
                         <td>
+                            <button class="btn btn-sm btn-primary" data-toggle= "modal" data-target="#exampleModalCenter" onclick="showDialog('{{ $produk->id }}')">Tambah Stock</button>
+                        
                             <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-primary edit-btn" data-id="{{ $produk->id }}">Edit</a>
                             
                             <form action="{{ route('produk.destroy', $produk->id) }}" method="POST" style="display: inline-block">
@@ -61,6 +63,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Hapus</button>
                             </form>
+                            
                         </td>
                     </tr>
                 </div>
@@ -114,7 +117,42 @@
                 });
             });
             </script>
-            
-        
-@endsection
 
+<!-- Dialog box untuk penambahan stock -->
+<!-- Dialog box untuk penambahan stock -->
+<div class="modal" id="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Stock</h3>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="penambahanStokForm" action="{{ route('penambahan-stok.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="produk_id" id="produkId">
+                    <div class="form-group">
+                        <label for="jumlah">Jumlah:</label>
+                        <input type="number" class="form-control" name="jumlah" id="jumlah">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" form="penambahanStokForm">Tambah</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showDialog(produkId) {
+        // Set nilai produkId pada input tersembunyi di dalam form
+        document.getElementById('produkId').value = produkId;
+        
+        // Munculkan dialog box
+        $('#dialog').modal('show');
+    }
+</script>
+
+@endsection

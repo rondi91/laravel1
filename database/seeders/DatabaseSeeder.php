@@ -23,15 +23,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory(10)->create(); 
+        User::factory(5)->create(); 
         // Pelanggan::factory(10)->create(); 
-        Produk::factory(100)->create(); 
+        Produk::factory(5)->create(); 
         Warna::factory(3)->create(); 
         Size::factory(4)->create(); 
-        Pesan::factory(100)->create(); 
-        DetailPesanan::factory(200)->create(); 
-        Harga::factory(100)->create(); 
-        Transactions::factory(200)->create(); 
+        Pesan::factory(15)->create(); 
+        DetailPesanan::factory(5)->create(); 
+        Harga::factory(5)->create(); 
+        Transactions::factory(5)->create(); 
         
         // Post::factory(10)->create();
         // memanggil postseeder

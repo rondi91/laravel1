@@ -66,12 +66,23 @@ class Dashboardcontroller extends Controller
 
     public function getDailyTransactions(Request $request)
     {
-        $transactions = Transactions::selectRaw('DATE(transaction_date) AS date, SUM(total_price) AS total')
-            ->whereDate('transaction_date', '>=', Carbon::now()->subDays(30))
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get();
+        $option = $request->input('option', 'count'); // Mengambil opsi dari request, defaultnya 'count'
 
-        return response()->json($transactions);
+        // $transactions = Transactions::selectRaw('DATE(transaction_date) AS date');
+
+        if ($option === 'count') {
+            $transactions= Transactions::selectRaw('DATE(transaction_date) AS date, COUNT(*) AS total');
+            
+        } elseif ($option === 'harga') {
+            $transactions = Transactions::selectRaw('DATE(transaction_date) AS date, SUM(total_price) AS harga');
+        }
+
+        $transactions->whereDate('transaction_date', '>=', Carbon::now()->subDays(30))
+            ->groupBy('date')
+            ->orderBy('date');
+
+        $result = $transactions->get();
+
+        return response()->json($result);
     }
 }

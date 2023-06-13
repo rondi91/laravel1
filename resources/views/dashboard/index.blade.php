@@ -128,6 +128,16 @@
 
         {{-- area chart  --}}
 
+        {{-- <canvas id="dailyTransactionsChart"></canvas> --}}
+
+        <div class="form-group">
+            <label for="chartOption">Opsi Grafik:</label>
+            <select id="chartOption" class="form-control">
+                <option value="count">Total harga</option>
+                <option value="harga">Total count</option>
+            </select>
+        </div>
+
         <canvas id="dailyTransactionsChart"></canvas>
     
 
@@ -192,7 +202,7 @@
 
     {{-- script area chart  --}}
 
-    <script>
+    {{-- <script>
         // Mengambil data transaksi harian dari server
         fetch("{{ route('dashboard.transactions.daily') }}")
             .then(response => response.json())
@@ -224,6 +234,75 @@
                     }
                 });
             });
+    </script> --}}
+
+
+    <script>
+        // Mengambil data transaksi harian dari server
+        fetch("{{ route('dashboard.transactions.daily') }}")
+            .then(response => response.json())
+            .then(data => {
+                // Mengubah format data menjadi array tanggal dan total
+                const dates = data.map(item => item.date);
+                var totals = data.map(item => item.total);
+                // console.log(data);  
+                // Mendapatkan elemen select opsi grafik
+                const chartOptionSelect = document.getElementById('chartOption');
+
+                // Menangani perubahan opsi grafik
+                chartOptionSelect.addEventListener('change', function () {
+                    const selectedOption = this.value;
+                    if (selectedOption === 'count') {
+                        fetch("{{ route('dashboard.transactions.daily') }}?option=" + selectedOption)
+                         .then(response => response.json())
+                         .then(data => {
+                        const dates = data.map(item => item.date);
+                        totals = data.map(item => item.total);
+                        });
+                        console.log(selectedOption);
+                    } else if (selectedOption === 'harga') {
+                        fetch("{{ route('dashboard.transactions.daily') }}?option=" + selectedOption)
+                         .then(response => response.json())
+                         .then(data => {
+                        const dates = data.map(item => item.date);
+                         totals = data.map(item => item.harga);
+                        
+                        });
+                        
+                    }
+
+                    // Memperbarui chart dengan data yang sesuai
+                    updateChart(dates, totals);
+                });
+                
+                
+                // Membuat chart awal dengan opsi total count
+                updateChart(dates, totals);
+            });
+
+        function updateChart(dates, totals) {
+            const ctx = document.getElementById('dailyTransactionsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Grafik Transaksi Harian',
+                        data: totals,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
     </script>
     
 @endsection

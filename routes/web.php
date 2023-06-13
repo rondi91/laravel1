@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Dashboardcontroller;
+use App\Http\Controllers\PenambahanStokController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransactionsController;
+use App\Models\PenambahanStok;
 use App\Models\Transactions;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +51,8 @@ Route::delete('/produk/{produk}', [ProdukController::class, 'destroy'])->name('p
 Route::get('/produk/search', [ProdukController::class, 'search'])->name('produk.search');
 Route::patch('/produk/{id}', [ProdukController::class, 'update'])->name('produk.update');
 
+Route::get('/tambahstock', [PenambahanStokController::class, 'index'])->name('tambahstock.index');
+Route::post('/tambahstock', [PenambahanStokController::class, 'tambahstock'])->name('penambahan-stok.store');
 
 // pesan
 Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');

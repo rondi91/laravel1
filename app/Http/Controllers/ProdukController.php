@@ -36,6 +36,8 @@ class ProdukController extends Controller
         
         return view('produks.index', compact('produks','warnas'));
     }
+   
+
     public function search(Request $request)
     {
         
@@ -144,4 +146,6 @@ class ProdukController extends Controller
     {
         //
     }
+
+
 }
