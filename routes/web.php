@@ -47,7 +47,7 @@ Route::post('/produk', [ProdukController::class, 'store'])->name('produk.store')
 // Route::get('/produk/{produk}', [ProdukController::class, 'show'])->name('produk.show');
 Route::get('/produk/{produk}/edit', [ProdukController::class, 'edit'])->name('produk.edit');
 Route::put('/produk/{produk}', [ProdukController::class, 'update'])->name('produk.updates');
-Route::delete('/produk/{produk}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+Route::delete('/produk/{harga}', [ProdukController::class, 'destroy'])->name('produk.destroy');
 Route::get('/produk/search', [ProdukController::class, 'search'])->name('produk.search');
 Route::patch('/produk/{id}', [ProdukController::class, 'update'])->name('produk.update');
 
@@ -58,10 +58,13 @@ Route::post('/tambahstock', [PenambahanStokController::class, 'tambahstock'])->n
 Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');
 Route::get('/pesan/create', [PesanController::class, 'create'])->name('pesan.create');
 Route::get('/pesan/{pesan}/edit', [PesanController::class, 'edit'])->name('pesan.edit');
-Route::get('/ßesan/{pesan}', [PesanController::class, 'show'])->name('pesan.show');
+Route::put('/pesan/{id}', [PesanController::class, 'update'])->name('pesan.update');
+Route::get('/pesan/{pesan}', [PesanController::class, 'show'])->name('pesan.show');
+Route::get('/pesan/{pesan}', [PesanController::class, 'detail'])->name('pesan.detail');
 Route::post('/pesan', [PesanController::class, 'store'])->name('pesan.store');
-Route::get('/pesan/searchPelanggan', [PesanController::class, 'searchPelanggan'])->name('pelanggan.search');
 Route::delete('/pesan{pesan}', [PesanController::class, 'destroy'])->name('pesan.destroy');
+
+Route::get('searchPelanggan', [PesanController::class, 'searchPelanggan'])->name('pelanggan.search');
 
 Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
 Route::get('/transactions/{id}', [TransactionsController::class, 'show'])->name('transactions.show');

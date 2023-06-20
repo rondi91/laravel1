@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePesanRequest;
 use App\Http\Requests\UpdatePesanRequest;
 use App\Models\DetailPesanan;
+use App\Models\Harga;
 use App\Models\Pelanggan;
 use App\Models\Pesan;
 use App\Models\Produk;
@@ -39,26 +40,25 @@ class PesanController extends Controller
     {
         // return 'ok';
         $pelanggan = Pelanggan::all();
-        $produk = Produk::all();
+        $produk = harga::with('produk','warna','size')->get();
 
         return view('pesans.create', compact('pelanggan', 'produk'));
     }
 
     public function searchPelanggan(Request $request)
     {
+        // return $request;
         $searchTerm = $request->input('term');
-        $pelanggan = Pelanggan::where('Nama_Pelanggan', 'LIKE', "%{$searchTerm}%")
-        
-        ->get();
-        $pelanggan = Pelanggan::where('Nama_Pelanggan', 'LIKE', '%' . $searchTerm . '%')
-        ->select('id', 'Nama_Pelanggan')
+       
+        $pelanggan = Pelanggan::where('nama_pelanggan', 'LIKE', '%' . $searchTerm . '%')
+        ->select('id', 'nama_pelanggan')
         ->get();
 
         $results = [];
         foreach ($pelanggan as $plg) {
             $results[] = [
                 'id' => $plg->id,
-                'text' => $plg->Nama_Pelanggan,
+                'text' => $plg->nama_pelanggan,
                 'ids' => $plg->langganan_id
             ];
         }
@@ -71,7 +71,7 @@ class PesanController extends Controller
      */
     public function store(StorePesanRequest $request)
     {
-    //    return $request;
+    //    return $request->input('produk');
         $request->validate([
             'pelanggan_id' => 'required',
             'produk' => 'array',
@@ -83,7 +83,11 @@ class PesanController extends Controller
             // 'produk' => 'required',
             // 'jumlah' => 'required|numeric',
         ]);
+
         
+
+        
+                
 
         $pesan = new Pesan();
         $pesan->pelanggan_id = $request->pelanggan_id;
@@ -98,6 +102,9 @@ class PesanController extends Controller
                 if (!empty($produkId)) {
                     $detailPesanan = new DetailPesanan();
                     $detailPesanan->pesan_id = $pesan->id;
+                    $selectedOption = explode("_", $produkId);
+                    $produkId = $selectedOption[1];
+                    $hargaID = $selectedOption[0];
                     $detailPesanan->produk_id = $produkId;
                     $detailPesanan->warna_id = 1;
                     $detailPesanan->size_id = 2;
@@ -105,9 +112,17 @@ class PesanController extends Controller
                     $detailPesanan->unit_price = 20000;
                     
                     $detailPesanan->save();
+
+                    // dd(__FILE__,__LINE__,$hargaID);
+
+                    $produk = Harga::find($hargaID);
+                    $produk->stock -= $request->input('jumlah')[$key];;
+                    $produk->save();
                 }
             }
         }
+
+        
 
         return redirect()->route('pesan.index')->with('success', 'Pesanan berhasil ditambahkan');
     
@@ -119,8 +134,12 @@ class PesanController extends Controller
     public function show($id)
     {
         $pesan = Pesan::findOrFail($id);
+        $nama_pelanggan = $pesan->pelanggan->nama_pelanggan;
+        $pesan['nama_pelanggan']= $nama_pelanggan;
+         return response()->json($pesan);
 
-        return view('pesans.show', compact('pesan'));
+
+        
     }
 
     /**
@@ -136,7 +155,28 @@ class PesanController extends Controller
      */
     public function update(UpdatePesanRequest $request, Pesan $pesan)
     {
-        //
+        // return $request;
+        $request->validate([
+            'pesan_id' => 'required',
+            'tanggal_pesan' => 'required|date',
+            'status_pesan' => 'required',
+        ]);
+        $id =$request->pesan_id;
+        
+        // Cari transaksi berdasarkan ID
+        $pesan = Pesan::find($id);
+        if (!$pesan) {
+            return redirect()->back()->with('error', 'pesan tidak ditemukan');
+        }
+        
+
+        // Update data pesan
+        $pesan->id = $request->pesan_id;
+        $pesan->tanggal = $request->tanggal_pesan;
+        $pesan->status = $request->status_pesan;
+        $pesan->save();
+
+        return redirect()->back()->with('success', 'Pesan berhasil diperbarui');
     }
 
     /**
@@ -145,5 +185,12 @@ class PesanController extends Controller
     public function destroy(Pesan $pesan)
     {
         //
+    }
+
+    public function detail(Pesan $pesan)
+    {   
+        // return $pesan;
+        $pesan =$pesan;
+        return view('pesans.detailpesan',compact('pesan'));
     }
 }

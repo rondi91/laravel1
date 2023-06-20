@@ -149,7 +149,7 @@
     function showDialog(produkId) {
         // Set nilai produkId pada input tersembunyi di dalam form
         document.getElementById('produkId').value = produkId;
-        
+        console.log(produkId);
         // Munculkan dialog box
         $('#dialog').modal('show');
     }

@@ -9,6 +9,7 @@
             <form method="POST" action="{{ route('pesan.store') }}">
                 @csrf
 
+            
                 <div class="form-group">
                     <label for="pelanggan">Pelanggan:</label>
                     <select class="pelanggan-search form-control " name="pelanggan_id" id="pelanggan" placeholder= "Pilih pelanggan"></select>
@@ -39,9 +40,20 @@
                       <select name="produk[]" class="produk-select">
                         <option value="">Pilih Produk</option>
                         @foreach($produk as $p)
-                          <option value="{{ $p->id }}">{{ $p->nama_produk }}</option>
+                          <option value="{{ $p->id }}_{{ $p->produk->id }}">{{ $p->produk->nama_produk }}</option>
+                          {{-- <input type="hidden" name="harga_id[]" value="{{ $p->id }}"> --}}
                         @endforeach
                       </select>
+
+                      <label for="warna">warna:</label>
+                      <select name="warna[]" class="warna-select">
+                        <option value="">Pilih warna</option>
+                        @foreach($warna as $p)
+                          <option value="{{ $p->id }}_{{ $p->warna->id }}">{{ $p->warna->nama_warna }}</option>
+                          {{-- <input type="hidden" name="harga_id[]" value="{{ $p->id }}"> --}}
+                        @endforeach
+                      </select>
+                
                 
                       <label for="jumlah">Jumlah:</label>
                       <input type="text" name="jumlah[]" class="jumlah-input" >
@@ -65,9 +77,13 @@
                         url: '{{ route("pelanggan.search") }}',
                         dataType: 'json',
                         delay: 250,
+                        
                         processResults: function(data) {
+                            
                             return {
+                                
                                 results: data
+                                
                             };
                         },
                         cache: true
@@ -96,8 +112,8 @@
             
                 @foreach($produk as $p)
                     var option = document.createElement('option');
-                    option.value = '{{ $p->id }}';
-                    option.textContent = '{{ $p->nama_produk }}';
+                    option.value = '{{ $p->id }}_{{ $p->produk->id }}';
+                    option.textContent = '{{ $p->produk->nama_produk }}';
                     produkSelect.appendChild(option);
                 @endforeach
             

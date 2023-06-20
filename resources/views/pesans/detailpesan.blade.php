@@ -1,6 +1,6 @@
 @extends('layouts.main')
 {{-- {{ dd(__FILE__,__LINE__,'ok'); }} --}}
-
+{{-- {{ dd(__FILE__,__LINE__,$pesan); }} --}}
 @section('content')
 <div class="container">
     
