@@ -36,11 +36,12 @@ class PesanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
         // return 'ok';
         $pelanggan = Pelanggan::all();
-        $produk = harga::with('produk','warna','size')->get();
+        $produk = harga::findOrFail($id);
+        // return $produk;
 
         return view('pesans.create', compact('pelanggan', 'produk'));
     }

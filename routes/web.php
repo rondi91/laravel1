@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Dashboardcontroller;
 use App\Http\Controllers\PenambahanStokController;
 use App\Http\Controllers\PesanController;
@@ -56,7 +57,7 @@ Route::post('/tambahstock', [PenambahanStokController::class, 'tambahstock'])->n
 
 // pesan
 Route::get('/pesan', [PesanController::class, 'index'])->name('pesan.index');
-Route::get('/pesan/create', [PesanController::class, 'create'])->name('pesan.create');
+Route::get('/pesan/create/{harga}', [PesanController::class, 'create'])->name('pesan.create');
 Route::get('/pesan/{pesan}/edit', [PesanController::class, 'edit'])->name('pesan.edit');
 Route::put('/pesan/{id}', [PesanController::class, 'update'])->name('pesan.update');
 Route::get('/pesan/{pesan}', [PesanController::class, 'show'])->name('pesan.show');
@@ -76,3 +77,19 @@ Route::put('/transactions/{id}', [TransactionsController::class, 'update'])->nam
 Route::delete('/transactions/{id}', [TransactionsController::class, 'destroy'])->name('transactions.destroy');
 
 Route::post('/pembayaran', 'PembayaranController@store')->name('pembayaran.store');
+
+
+//
+// Menampilkan keranjang
+Route::get('/cart', [CartController::class,'index'])->name('cart.index');
+
+// Menambahkan produk ke keranjang
+Route::post('/cart/add', [CartController::class,'store'])->name('cart.store');
+Route::post('/cart/update-quantity', [CartController::class,'updatequantity'])->name('cart.updatequantity');
+
+// Mengupdate jumlah produk dalam keranjang
+Route::put('/cart/update/{id}', [CartController::class,'update'])->name('cart.update');
+
+// Menghapus produk dari keranjang
+Route::delete('/cart/remove/{id}', [CartController::class,'remove'])->name('cart.remove');
+

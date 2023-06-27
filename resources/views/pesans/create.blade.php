@@ -37,22 +37,9 @@
                 <div id="pesan-container">
                     <div class="pesan-group">
                       <label for="produk">Produk:</label>
-                      <select name="produk[]" class="produk-select">
-                        <option value="">Pilih Produk</option>
-                        @foreach($produk as $p)
-                          <option value="{{ $p->id }}_{{ $p->produk->id }}">{{ $p->produk->nama_produk }}</option>
-                          {{-- <input type="hidden" name="harga_id[]" value="{{ $p->id }}"> --}}
-                        @endforeach
-                      </select>
+                      <input type="text" name="" id="" value="{{ $produk->produk->nama_produk }}" readonly>
 
-                      <label for="warna">warna:</label>
-                      <select name="warna[]" class="warna-select">
-                        <option value="">Pilih warna</option>
-                        @foreach($warna as $p)
-                          <option value="{{ $p->id }}_{{ $p->warna->id }}">{{ $p->warna->nama_warna }}</option>
-                          {{-- <input type="hidden" name="harga_id[]" value="{{ $p->id }}"> --}}
-                        @endforeach
-                      </select>
+                      
                 
                 
                       <label for="jumlah">Jumlah:</label>
@@ -94,44 +81,7 @@
                
             });
         
-                function tambahPesan() {
-                // console.log('ok');
-                var pesanGroup = document.createElement('div');
-                pesanGroup.className = 'pesan-group';
-            
-                var produkLabel = document.createElement('label');
-                produkLabel.textContent = 'Produk:';
-                var produkSelect = document.createElement('select');
-                produkSelect.name = 'produk[]';
-                produkSelect.className = 'produk-select';
-            
-                var defaultOption = document.createElement('option');
-                defaultOption.value = '';
-                defaultOption.textContent = 'Pilih Produk';
-                produkSelect.appendChild(defaultOption);
-            
-                @foreach($produk as $p)
-                    var option = document.createElement('option');
-                    option.value = '{{ $p->id }}_{{ $p->produk->id }}';
-                    option.textContent = '{{ $p->produk->nama_produk }}';
-                    produkSelect.appendChild(option);
-                @endforeach
-            
-                var jumlahLabel = document.createElement('label');
-                jumlahLabel.textContent = 'Jumlah:';
-                var jumlahInput = document.createElement('input');
-                jumlahInput.type = 'text';
-                jumlahInput.name = 'jumlah[]';
-                jumlahInput.className = 'jumlah-input';
-            
-                pesanGroup.appendChild(produkLabel);
-                pesanGroup.appendChild(produkSelect);
-                pesanGroup.appendChild(jumlahLabel);
-                pesanGroup.appendChild(jumlahInput);
-            
-                var container = document.getElementById('pesan-container');
-                container.appendChild(pesanGroup);
-                }
+                
             </script>
     
 @endsection

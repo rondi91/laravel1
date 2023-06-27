@@ -54,6 +54,7 @@
                        <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'stock', this.innerHTML)">{{ $produk->harga ? $produk->stock : '-' }}</td>
                        <td contenteditable="true" onblur="updateProduk('{{ $produk->id }}', 'harga', this.innerHTML)">{{ $produk->harga ? $produk->harga : '-' }}</td> 
                         <td>
+                            <button class="btn btn-primary add-to-cart-btn" id="add-to-cart-btn" data-toggle="modal" data-target="#cartModal" data-product-id="{{ $produk->id }}">Add to Cart</button>
                             <button class="btn btn-sm btn-primary" data-toggle= "modal" data-target="#exampleModalCenter" onclick="showDialog('{{ $produk->id }}')">Tambah Stock</button>
                         
                             <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-sm btn-primary edit-btn" data-id="{{ $produk->id }}">Edit</a>
@@ -63,6 +64,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Hapus</button>
                             </form>
+                            <a href="{{ route('pesan.create', $produk->id) }}" class="btn btn-sm btn-warning ">order</a>
                             
                         </td>
                     </tr>
@@ -78,48 +80,12 @@
 
 
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script>
-            function updateProduk(id, field, value) {
-                axios.patch(`/produk/${id}`, {
-                        [field]: value
-                    })
-                    .then(response => {
-                        if (response.status === 200) {
-                            console.log('Produk berhasil diperbarui');
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            }
-        </script>
 
 
-        {{-- live search --}}
-        <script>
-            $(document).ready(function() {
-                $('#searchinput').on('keyup', function() {
-                    var query = $(this).val();
-                    console.log(query);
-            
-                    $.ajax({
-                        url: "{{ route('produk.search') }}",
-                        type: "GET",
-                        data: {
-                            search: query
-                        },
-                        success: function(data) {
-                            $('#produk-table').html(data);
-                        }
-                    });
-                });
-            });
-            </script>
+        
 
 <!-- Dialog box untuk penambahan stock -->
-<!-- Dialog box untuk penambahan stock -->
+
 <div class="modal" id="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -145,7 +111,78 @@
     </div>
 </div>
 
-<script>
+
+    <!-- Modal Dialog add cart -->
+    {{-- <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="cartModalLabel">Add to Cart</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- Form untuk memasukkan jumlah produk -->
+              <form id="addToCartForm" action="{{ route('cart.store') }}" method="post">
+                <div class="form-group">
+                    @csrf
+                  <label for="quantity">Quantity</label>
+                  <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary addToCartButton">Add</button>
+            </div>
+          </div>
+        </div>
+      </div> --}}
+
+       {{-- java script code  --}}
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            function updateProduk(id, field, value) {
+                axios.patch(`/produk/${id}`, {
+                        [field]: value
+                    })
+                    .then(response => {
+                        if (response.status === 200) {
+                            console.log('Produk berhasil diperbarui');
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        
+
+
+        //  live search  produk
+        
+            $(document).ready(function() {
+                $('#searchinput').on('keyup', function() {
+                    var query = $(this).val();
+                    console.log(query);
+            
+                    $.ajax({
+                        url: "{{ route('produk.search') }}",
+                        type: "GET",
+                        data: {
+                            search: query
+                        },
+                        success: function(data) {
+                            $('#produk-table').html(data);
+                        }
+                    });
+                });
+            });
+
+    // code add stock    
+         
     function showDialog(produkId) {
         // Set nilai produkId pada input tersembunyi di dalam form
         document.getElementById('produkId').value = produkId;
@@ -153,6 +190,37 @@
         // Munculkan dialog box
         $('#dialog').modal('show');
     }
-</script>
+
+
+
+ // {{-- js for add cart  --}}
+
+ $(document).ready(function() {
+    $('.add-to-cart-btn').click(function() {
+        var productId = $(this).data('product-id');
+
+        $.ajax({
+            url: '{{ route('cart.store') }}',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                product_id: productId,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Product added to cart successfully.');
+                } else {
+                    alert('Failed to add product to cart.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+
+    </script>
 
 @endsection
